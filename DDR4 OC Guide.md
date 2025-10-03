@@ -1,74 +1,74 @@
-# Table of Contents
-- [Table of Contents](#table-of-contents)
+# Tabla de Contenido
+- [Tabla de Contenido](#table-of-contents)
 - [Setup](#setup)
-  - [Memory Testing Software](#memory-testing-software)
-    - [Avoid](#avoid)
-    - [Recommended](#recommended)
-    - [Alternatives](#alternatives)
-    - [Comparison](#comparison)
-  - [Timings Software](#timings-software)
+  - [Software para Testear Memoria RAM](#memory-testing-software)
+    - [Evitar](#avoid)
+    - [Recomendaciones](#recommended)
+    - [Alternativas](#alternatives)
+    - [Comparaciones](#comparison)
+  - [Software para Visualizar Timings](#timings-software)
   - [Benchmarks](#benchmarks)
-- [General RAM Info](#general-ram-info)
-  - [Frequency and Timings Relation](#frequency-and-timings-relation)
-  - [Primary, Secondary and Tertiary Timings](#primary-secondary-and-tertiary-timings)
-- [Expectations/Limitations](#expectationslimitations)
-  - [Motherboard](#motherboard)
-  - [Integrated Circuits (ICs)](#integrated-circuits-ics)
-    - [Shorthand Notation](#shorthand-notation)
-    - [Label on Sticks](#label-on-sticks)
+- [Información General Acerca de la RAM](#general-ram-info)
+  - [Relación entre Frecuencia y Timings](#frequency-and-timings-relation)
+  - [Timings Primarios, Secundarios y Terciarios](#primary-secondary-and-tertiary-timings)
+- [Expectativas/Limitaciones](#expectationslimitations)
+  - [Placa Madre/Motherboard](#motherboard)
+  - [Circuitos Integrados (ICs)](#integrated-circuits-ics)
+    - [Anotación Simple](#shorthand-notation)
+    - [Etiqueta en las RAMs](#label-on-sticks)
       - [Corsair Version Number](#corsair-version-number)
       - [G.Skill 042 Code](#gskill-042-code)
       - [Kingston Code](#kingston-code)
-    - [A Note on Logical Ranks and Density](#a-note-on-logical-ranks-and-density)
-    - [Voltage Scaling](#voltage-scaling)
-    - [Expected Max Frequency](#expected-max-frequency)
-    - [Binning](#binning)
-    - [Maximum Recommended Daily Voltage](#maximum-recommended-daily-voltage)
+    - [Nota en los Rangos Lógicos y la Densidad](#a-note-on-logical-ranks-and-density)
+    - [Escala de Voltaje](#voltage-scaling)
+    - [Frecuencia Máxima Esperada](#expected-max-frequency)
+    - [Bineado](#binning)
+    - [Voltaje Maxímo Diario Recomendado](#maximum-recommended-daily-voltage)
     - [Ranking](#ranking)
-    - [Temperatures and Its Effect on Stability](#temperatures-and-its-effect-on-stability)
+    - [Temperaturas y sus Efectos en la Estabilidad](#temperatures-and-its-effect-on-stability)
   - [Integrated Memory Controller (IMC)](#integrated-memory-controller-imc)
     - [Intel IMC](#intel-imc)
     - [AMD IMC](#amd-imc)
 - [Overclocking](#overclocking)
-  - [Miscellaneous Tips](#miscellaneous-tips)
+  - [Miscelanea de Tips](#miscellaneous-tips)
     - [Intel](#intel)
     - [AMD](#amd)
-  - [Finding a Baseline](#finding-a-baseline)
-  - [Tightening Timings](#tightening-timings)
-- [Useful Links](#useful-links)
+  - [Encontrar una línea base](#finding-a-baseline)
+  - [Ajustando Timings](#tightening-timings)
+- [Links Útiles](#useful-links)
   - [Benchmarks](#benchmarks-1)
-  - [Information](#information)
+  - [Información](#information)
 
 # Setup
-## Memory Testing Software
-You should always test with various stress tests to ensure your overclock is stable.
+## Software para Testear Memoria RAM
+Usted siempre debería testear con varios test de estrés para asegurarse de que su overclock es estable.
 ### Avoid
-* I wouldn't recommend the AIDA64 memory test and [Memtest64](https://forums.anandtech.com/threads/techpowerups-memtest-64-is-it-better-than-hci-memtest-for-determining-stability.2532209/) as they are both not very good at finding memory errors.
-### Recommended
-* [TM5](https://mega.nz/file/vLhxBahB#WwJIpN3mQOaq_XsJUboSIcaMg3RlVBWvFnVspgJpcLY) with any of the configs listed:
-  * [Extreme by anta777](TM5-Configs/extreme@anta777.cfg) (recommended). Make sure to load the config. It should say 'Customize: Extreme1 @anta777' if loaded.  
+* Yo no recomendaría el test de estrés de AIDA64 ni [Memtest64](https://forums.anandtech.com/threads/techpowerups-memtest-64-is-it-better-than-hci-memtest-for-determining-stability.2532209/) ya que ambos no son muy buenos al encontrar errores en la memoria.
+### Recomendaciones
+* [TM5](https://mega.nz/file/vLhxBahB#WwJIpN3mQOaq_XsJUboSIcaMg3RlVBWvFnVspgJpcLY) con cualquiera de las configs listadas:
+  * [Extreme by anta777](TM5-Configs/extreme@anta777.cfg) (recomendada). Asegúrese de cargar la config. El programa debería decir 'Customize: Extreme1 @anta777' si fue cargado correctamente.  
   Credits: [u/nucl3arlion](https://www.reddit.com/r/overclocking/comments/dlghvs/micron_reve_high_training_voltage_requirement/f4zcs04/).
   * [Absolut](TM5-Configs/absolutnew.cfg)
   * [PCBdestroyer](TM5-Configs/PCBdestroyer.cfg)
   * [LMHz Universal 2](TM5-Configs/Universal-2@LMhz.cfg)
-  * If you experience issues with all threads crashing upon launch with the extreme config, it might help to edit the row "Testing Window Size (Mb)=1408". Replace the window size with your total RAM (minus some margin for Windows) divided by your processor's available threads (e.g., 12800/16 = 800 MB per thread).
-* [OCCT](https://www.ocbase.com/) with the dedicated memory test using SSE or AVX instructions.
-  * Note that AVX and SSE can vary in error detection speed. On Intel-based systems, SSE appears better for testing IMC voltages, while AVX appears better for DRAM voltage.
-  * The Large AVX2 CPU test is a great stability test for your CPU and RAM at the same time. The more you tune your ram, the harder it'll be to be stable in this test. Be sure to run Normal Mode as Extreme will not use as much RAM.
-  * The VRAM test at maximum utilization in conjunction with Prime95 Large FFTs will stress FCLK and is recommended when testing FCLK stability.
-### Alternatives
+  * Si experimenta problemas con todos los hilos que se bloquean en el inicio con la configuración extrema, podría ayudar a editar la fila "Testing Window Size (Mb)=1408". Reemplace el tamaño de la ventana con su RAM total (menos algún margen para Windows) dividido por los hilos disponibles del procesador (por ejemplo, 12800/16 = 800 MB por hilo).
+* [OCCT](https://www.ocbase.com/) con la prueba de memoria dedicada utilizando las instrucciones SSE o AVX.
+  * Tenga en cuenta que AVX y SSE pueden variar en la velocidad de detección de errores. En los sistemas basados en Intel, SSE aparece mejor para probar voltajes de IMC, mientras que AVX aparece mejor para voltaje de DRAM.
+  * La prueba de CPU AVX2 grande es una gran prueba de estabilidad para su CPU y RAM al mismo tiempo. Cuanto más ajuste su ram, más difícil será ser estable en esta prueba. Asegúrese de ejecutar el Modo Normal ya que Extreme no utilizará tanta RAM.
+  * La prueba de VRAM a máxima utilización en conjunción con Prime95 Large FFTs pondrá tensión sobre el FCLK y se recomienda al probar la estabilidad del FCLK.
+### Alternativas
 * [GSAT](https://github.com/stressapptest/stressapptest).
-  1. [Install WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and [Ubuntu](https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6?activetab=pivot:overviewtab).
-  2. Open an Ubuntu bash shell and type `sudo apt update`.
-  3. Type `sudo apt-get install stressapptest`.
-  4. To start testing, type `stressapptest -M 13000 -s 3600 -W --pause_delay 3600`.
-     * `-M` is the amount of memory to test (MB).
-     * `-s` is how long to test for (seconds).
-     * `--pause_delay` is the delay between power spikes. It should be the same as the `-s` argument to skip the power spikes test.
-* [Karhu RAM Test](https://www.karhusoftware.com/ramtest/) (paid).
-* [y-cruncher](http://www.numberworld.org/y-cruncher/) with [this config](https://pastebin.com/dJQgFtDH).
-  * Paste this in a new file called `memtest.cfg` in the same folder as `y-cruncher.exe`.
-  * Adjust the following fields if necessary:
+  1. [Instalar WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) y [Ubuntu](https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6?activetab=pivot:overviewtab).
+  2. Abra una consola de Ubuntu y escriba `sudo apt update`.
+  3. Escriba `sudo apt-get install stressapptest`.
+  4. Para iniciar el test escriba `stressapptest -M 13000 -s 3600 -W --pause_delay 3600`.
+     * `-M` es la cantidad de memoria para testear (MB).
+     * `-s` es el tiempo de prueba (segundos).
+     * `--pause_delay` es el retraso entre los picos de potencia. Deberia ser el mismo que el argumento `-s`, para saltarse la prueba de los picos de potencia.
+* [Karhu RAM Test](https://www.karhusoftware.com/ramtest/) (paga).
+* [y-cruncher](http://www.numberworld.org/y-cruncher/) con [esta config](https://pastebin.com/dJQgFtDH).
+  * Pegue esto en un nuevo archivo llamado `memtest.cfg` en el mismo folder que `y-cruncher.exe`.
+  * Ajuste los siguientes campos si es necesario:
     * `LogicalCores`: CPU threads, e.g. `[0 1 2 3 4 5]` on 6C**6**T or `[0 1 2 3 4 5 6 7]` on 4C**8**T
     * `TotalMemory`: Memory (bytes) used by y-cruncher
   * Create a shortcut to `y-cruncher.exe` and add `pause:1 config memtest.cfg` to the target field.
