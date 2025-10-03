@@ -42,7 +42,7 @@
 # Setup
 ## Software para Testear Memoria RAM
 Usted siempre debería testear con varios test de estrés para asegurarse de que su overclock es estable.
-### Avoid
+### Evitar
 * Yo no recomendaría el test de estrés de AIDA64 ni [Memtest64](https://forums.anandtech.com/threads/techpowerups-memtest-64-is-it-better-than-hci-memtest-for-determining-stability.2532209/) ya que ambos no son muy buenos al encontrar errores en la memoria.
 ### Recomendaciones
 * [TM5](https://mega.nz/file/vLhxBahB#WwJIpN3mQOaq_XsJUboSIcaMg3RlVBWvFnVspgJpcLY) con cualquiera de las configs listadas:
