@@ -1,43 +1,43 @@
 # Tabla de Contenido
-- [Tabla de Contenido](#table-of-contents)
+- [Tabla de Contenido](#tabla-de-contenido)
 - [Setup](#setup)
-  - [Software para Testear Memoria RAM](#memory-testing-software)
-    - [Evitar](#avoid)
-    - [Recomendaciones](#recommended)
-    - [Alternativas](#alternatives)
-    - [Comparaciones](#comparison)
-  - [Software para Visualizar Timings](#timings-software)
+  - [Software para Testear Memoria RAM](#software-para-testear-memoria)
+    - [Evitar](#evitar)
+    - [Recomendaciones](#recomendaciones)
+    - [Alternativas](#alternativas)
+    - [Comparaciones](#comparaciones)
+  - [Software para Visualizar Timings](#software-para-visualizar-timings)
   - [Benchmarks](#benchmarks)
-- [Información General Acerca de la RAM](#general-ram-info)
-  - [Relación entre Frecuencia y Timings](#frequency-and-timings-relation)
-  - [Timings Primarios, Secundarios y Terciarios](#primary-secondary-and-tertiary-timings)
-- [Expectativas/Limitaciones](#expectationslimitations)
-  - [Placa Madre/Motherboard](#motherboard)
-  - [Circuitos Integrados (ICs)](#integrated-circuits-ics)
-    - [Anotación Simple](#shorthand-notation)
-    - [Etiqueta en las RAMs](#label-on-sticks)
+- [Información General Acerca de la RAM](#información-general-acerca-de-las-ram)
+  - [Relación entre Frecuencia y Timings](#relación-entre-frecuencia-y-timings)
+  - [Timings Primarios, Secundarios y Terciarios](#timings-primarios-secundarios-y-terciarios)
+- [Expectativas/Limitaciones](#expectativaslimitaciones)
+  - [Placa Madre/Motherboard](#placamadremotherboard)
+  - [Circuitos Integrados (ICs)](#circuitos-integrados-ics)
+    - [Anotación Simple](#anotación-simple)
+    - [Etiqueta en las RAMs](#etiqueta-en-las-rams)
       - [Corsair Version Number](#corsair-version-number)
       - [G.Skill 042 Code](#gskill-042-code)
       - [Kingston Code](#kingston-code)
-    - [Nota en los Rangos Lógicos y la Densidad](#a-note-on-logical-ranks-and-density)
-    - [Escala de Voltaje](#voltage-scaling)
-    - [Frecuencia Máxima Esperada](#expected-max-frequency)
-    - [Bineado](#binning)
-    - [Voltaje Maxímo Diario Recomendado](#maximum-recommended-daily-voltage)
+    - [Nota en los Rangos Lógicos y la Densidad](#nota-en-los-rangos-logicos-y-la-densidad)
+    - [Escala de Voltaje](#escala-de-voltaje)
+    - [Frecuencia Máxima Esperada](#frecuencia-maxima-esperada)
+    - [Bineado](#bineado)
+    - [Voltaje Maxímo Diario Recomendado](#voltaje-maximo-diario-recomendado)
     - [Ranking](#ranking)
-    - [Temperaturas y sus Efectos en la Estabilidad](#temperatures-and-its-effect-on-stability)
+    - [Temperaturas y sus Efectos en la Estabilidad](#temperaturas-y-sus-efectos-en-la-estabilidad)
   - [Integrated Memory Controller (IMC)](#integrated-memory-controller-imc)
     - [Intel IMC](#intel-imc)
     - [AMD IMC](#amd-imc)
 - [Overclocking](#overclocking)
-  - [Miscelanea de Tips](#miscellaneous-tips)
+  - [Miscelanea de Tips](#miscelanea-de-tips)
     - [Intel](#intel)
     - [AMD](#amd)
-  - [Encontrar una línea base](#finding-a-baseline)
-  - [Ajustando Timings](#tightening-timings)
-- [Links Útiles](#useful-links)
+  - [Encontrar una línea base](#encontrar-una-linea-base)
+  - [Ajustando Timings](#ajustando-timings)
+- [Useful Link](#useful-links)
   - [Benchmarks](#benchmarks-1)
-  - [Información](#information)
+  - [Información](#informacion)
 
 # Setup
 ## Software para Testear Memoria RAM
@@ -350,7 +350,7 @@ Hasta donde sé, tCL, tRCD, tRP y posiblemente tRFC pueden (o no) mostrar voltag
 
   * VCCIO generalmente debe estar **50 mV por debajo de VCCSA**, y correr 1.4 V VCCSA + 1.35 V VCCIO es aceptable como límite superior.  
   * Los voltajes seguros en Alder Lake no se conocen bien, ya que es relativamente nuevo. 1.25-1.35 V en VCCSA y VDDQ no ha mostrado degradación considerable.  
-    * Para más info ver [Information](#information).  
+    * Para más info ver [Information](#informacion).  
   * Con más DIMMs y/o DIMMs dual-rank, puede que necesites **mayor VCCSA y VCCIO** que los sugeridos.  
 
 * En CPUs de **Skylake a Rocket Lake** (inclusive), **tRCD y tRP están ligados**, lo que significa que si configuras tRCD 16 y tRP 17, ambos funcionarán al valor más alto (17).  
@@ -503,7 +503,7 @@ Algunas terminologías:
      * Gigabyte: (Dynamic<sup>1</sup>) Vcore SOC.
        * <sup>1</sup>Dynamic Vcore SOC se encuentra en ciertas motherboards Gigabyte y es un voltaje de offset. Por lo tanto, el voltaje base puede cambiar automáticamente al aumentar la frecuencia de DRAM. Por ejemplo, +0.100 V a DDR4-3000 podría resultar en 1.10 V real, pero +0.100 V a DDR4-3400 podría resultar en 1.20 V real.
      * MSI: CPU NB/SOC.
-5. Para determinar qué voltaje usar para tu IC, consulta la [sección de voltaje diario máximo recomendado](#maximum-recommended-daily-voltage).
+5. Para determinar qué voltaje usar para tu IC, consulta la [sección de voltaje diario máximo recomendado](#voltaje-maximo-diario-recomendado).
    * “Roll over” significa que el IC se vuelve más inestable al aumentar el voltaje, a veces hasta no POSTear.
    * ICs conocidos por “roll over” por encima de 1.35 V incluyen, pero no se limitan a: Samsung C-die de 8 Gb y Micron/SpecTek más antiguos (antes de M8E).
 
@@ -711,13 +711,13 @@ Algunas terminologías:
 
   * Valores bajos pueden ayudar estabilidad y reducir voltaje IMC. Algunos boards entrenan solos; otros permiten tuning manual.
 
-12. Puedes aumentar voltaje DRAM para bajar timings aún más. Ten en cuenta el [escalado de voltaje de tus ICs](#voltage-scaling) y [voltaje diario máximo recomendado](#maximum-recommended-daily-voltage).
+12. Puedes aumentar voltaje DRAM para bajar timings aún más. Ten en cuenta el [escalado de voltaje de tus ICs](#escala-de-voltaje) y [voltaje diario máximo recomendado](#voltaje-maximo-diario-recomendado).
 
 # Useful Links
 ## Benchmarks
 * [Impact of RAM on Intel's Skylake desktop architecture by KingFaris](https://kingfaris.co.uk/blog/intel-ram-oc-impact)
 * [RAM timings and their influence on games and applications (AMD) by Reous](https://www.hardwareluxx.de/community/threads/ram-timings-und-deren-einfluss-auf-spiele-und-anwendungen-amd-update-23-05-2020.1269156/)
-## Information
+## Información
 * [r/overclocking Wiki - DDR4](https://www.reddit.com/r/overclocking/wiki/ram/ddr4)
 * [Demystifying Memory Overclocking on Ryzen: OC Guidelines and Explaining Subtimings, Resistances, Voltages, and More! by varexos717](https://redd.it/ahs5a2)
 * [Maximus Z690 and Alder Lake: Modern CPU’s require Modern Overclocking Solutions](https://rog.asus.com/forum/showthread.php?126369-Maximus-Z690-and-Alder-Lake-Modern-CPU%92s-require-Modern-Overclocking-Solutions)
@@ -725,6 +725,5 @@ Algunas terminologías:
 * [HardwareLUXX Ryzen RAM OC Thread](https://www.hardwareluxx.de/community/f13/ryzen-ram-oc-thread-moegliche-limitierungen-1216557.html)
 * [Ryzen 3000 Memory / Fabric (X370/X470/X570) by elmor](https://www.overclock.net/forum/13-amd-general/1728878-ryzen-3000-memory-fabric-x370-x470-x570.html)
 * [Intel Memory Overclocking Quick Reference by sdch](https://www.overclock.net/threads/official-intel-ddr4-24-7-memory-stability-thread.1569364/page-392#post-27784556)
-* [The road to overclocking memory without increasing voltage by Raja@ASUS](https://rog.asus.com/forum/showthread.php?47670-Maximus-7-Gene-The-road-to-overclocking-memory-without-increasing-voltage) (images broken)
 * [Advanced Skylake Overclocking: Tune DDR4 Memory RTL/IO on Maximus VIII with Alex@ro's Guide](https://hwbot.org/newsflash/3058_advanced_skylake_overclocking_tune_ddr4_memory_rtlio_on_maximus_viii_with_alexaros_guide)
 * [BSOD codes when OC'ing and possible actions](https://www.reddit.com/r/overclocking/comments/atwtt5/psa_bsod_codes_when_ocing_and_possible_actions/)
