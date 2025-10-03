@@ -8,13 +8,13 @@
     - [Comparaciones](#comparaciones)
   - [Software para Visualizar Timings](#software-para-visualizar-timings)
   - [Benchmarks](#benchmarks)
-- [Información General Acerca de la RAM](#información-general-acerca-de-las-ram)
+- [Información General Acerca de la RAM](#información-general-acerca-de-la-ram)
   - [Relación entre Frecuencia y Timings](#relación-entre-frecuencia-y-timings)
   - [Timings Primarios, Secundarios y Terciarios](#timings-primarios-secundarios-y-terciarios)
 - [Expectativas/Limitaciones](#expectativaslimitaciones)
   - [Placa Madre/Motherboard](#placamadremotherboard)
   - [Circuitos Integrados (ICs)](#circuitos-integrados-ics)
-    - [Anotación Simple](#anotación-simple)
+    - [Anotación Simple](#anotacion-simple)
     - [Etiqueta en las RAMs](#etiqueta-en-las-rams)
       - [Corsair Version Number](#corsair-version-number)
       - [G.Skill 042 Code](#gskill-042-code)
@@ -88,7 +88,7 @@ Usted siempre debería testear con varios test de estrés para asegurarse de que
        El campo de destino debería verse así: `"path\to\prime95\prime95.exe" -t -WRAM`.
     5. Ahora puede usar el shortcut para iniciar Prime95 con las configuraciones proporcionadas.
 * [randomx-stress](https://github.com/00-matt/randomx-stress/releases) - Puede ser usado para testear la estabilidad de FCLK.
-### Comparación
+### Comparaciones
 [Comparación](https://imgur.com/a/jhrFGhg) entre Karhu RAMTest, TM5 con la configuración extrema, y GSAT.
   * TM5 es el más rápido y más estresante por un margen considerable, aunque he tenido casos en los que pasaría 30 minutos de TM5 pero fallaría a 10 minutos de Karhu. Otro usuario tuvo una experiencia similar. YMMV.
     
