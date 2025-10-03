@@ -1,7 +1,7 @@
 # Tabla de Contenido
 - [Tabla de Contenido](#tabla-de-contenido)
 - [Setup](#setup)
-  - [Software para Testear Memoria RAM](#software-para-testear-memoria)
+  - [Software para Testear Memoria RAM](#software-para-testear-memoria-ram)
     - [Evitar](#evitar)
     - [Recomendaciones](#recomendaciones)
     - [Alternativas](#alternativas)
