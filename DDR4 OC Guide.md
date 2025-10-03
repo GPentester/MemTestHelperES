@@ -207,34 +207,35 @@ Vea [HardwareLuxx](https://www.hardwareluxx.de/community/threads/ryzen-ram-oc-m%
 * [Fuente](http://www.xtremesystems.org/forums/showthread.php?285750-Interesting-memory-deals-thread&p=5230258&viewfull=1#post5230258)
 
 ### Nota en los Rangos Lógicos y la Densidad
-* Single rank sticks usually clock higher than dual-rank sticks, but depending on the benchmark, the performance gain from rank interleaving<sup>1</sup> can be significant enough to outperform faster single-rank sticks. [This can be observed in synthetics and games](https://kingfaris.co.uk/ram).
-   * On recent platforms (Comet Lake and Zen3), BIOS and memory controller support for dual-rank has significantly improved. On many Z490 boards, dual rank Samsung 8 Gb B-die (2x16 GB) will clock just as high as single-rank B-die, meaning you have all the performance gains of rank interleaving with little to no downsides.
-   * <sup>1</sup>Rank interleaving allows the memory controller to parallelize memory requests, for example writing on one rank while the other is refreshing. The impact of this is easily observed in AIDA64 copy bandwidth. From the eyes of the memory controller, it doesn't matter whether the second rank is on the same DIMM (two ranks on one DIMM) or a different DIMM (two DIMM in one channel). It does, however, matter from an overclocking perspective when you consider memory trace layouts and BIOS support.
-   * Having a second rank of the same IC also means twice as many bank groups are available. That means that short timings - such as RRD_S rather than RRD_L - can be used more often, as it's more likely for there to be a fresh bank group available. The long timing (L) is required when operating on the same bank group twice in a row, and when there are 7 other bank groups instead of 3 you have a lot more choices to avoid doing that.
-   * It also means that there are twice as many banks, and thus twice as many memory rows can be open at any given time. As a result, it's more likely that the row you need will be open.
-You won't have to close row A, open row B, and then close B to open A again as often.
-You're held up by operations like RAS/RC/RCD (when waiting for a row to open because it was closed) and RP (when waiting for a row to close to open another one) less often.
-   * x16 configurations will have half as many banks and bank groups as the traditional x8 configurations, which means less performance. See [buildzoid's video](https://www.youtube.com/watch?v=k6SIdxq2yxE) for more information.
-* Density matters when determining how far your ICs can go. For example, 4 Gb AFR and 8 Gb AFR will not overclock the same despite sharing the same name. The same can be said for Micron Rev. B, which exists as 8 Gb and 16 Gb. The 16 Gb ICs overclock better and are sold in 16 GB and 8 GB capacities despite the DIMMs using 8 chips. The 8 GB sticks have their SPD modified and can be found in higher-end Crucial kits (BLM2K8G51C19U4B).
-* As the total count of ranks in a system increases, so does the load on the memory controller. This usually means that more memory ranks will require higher voltage, especially VCCSA on Intel and SOC voltage on AMD.
+* Los sticks single-rank suelen escalar más alto que los dual-rank, pero dependiendo del benchmark, la ganancia de rendimiento por *rank interleaving*<sup>1</sup> puede ser lo bastante grande como para superar a sticks single-rank más rápidos. [Esto se ve claro en synthetics y juegos](https://kingfaris.co.uk/ram).
+   * En plataformas recientes (Comet Lake y Zen3), el soporte en BIOS y memory controller para dual-rank ha mejorado mucho. En muchas Z490, los Samsung B-die de 8 Gb en configuración 2x16 GB (dual-rank) pueden clockear igual de alto que un single-rank B-die, lo que significa que tienes todos los gains del *rank interleaving* casi sin downsides.
+   * <sup>1</sup>El *rank interleaving* le permite al memory controller paralelizar requests, por ejemplo escribir en un rank mientras el otro refreshea. Esto impacta directo en AIDA64 copy bandwidth. Para el controlador da igual si el segundo rank está en el mismo DIMM o en otro dentro del mismo channel, aunque para overclock sí importa por el layout de las memory traces y el soporte en BIOS.
+   * Tener un segundo rank del mismo IC significa el doble de bank groups disponibles. Eso habilita timings cortos como RRD_S en vez de RRD_L con más frecuencia, ya que hay más probabilidades de que haya un bank group “fresco”. Con 7 grupos en vez de 3, hay mucho más margen para evitar latencias largas.
+   * También significa el doble de banks, por lo que más rows pueden estar abiertas al mismo tiempo. Así es más probable que la row que necesitas ya esté abierta, evitando ciclos extra de open/close (RAS/RC/RCD y RP).
+   * Configs x16 tienen la mitad de banks y bank groups comparadas con x8, lo que reduce performance. Mira [el video de buildzoid](https://www.youtube.com/watch?v=k6SIdxq2yxE) para más info.
+* La densidad de los IC también importa en el OC. Ejemplo: 4 Gb AFR y 8 Gb AFR no clockean igual aunque tengan el mismo nombre. Lo mismo pasa con Micron Rev. B, que existe en 8 Gb y 16 Gb. Los ICs de 16 Gb escalan mejor y se venden tanto en sticks de 16 GB como de 8 GB (aunque usen 8 chips). Los de 8 GB suelen traer SPD modificado y aparecen en kits Crucial high-end (BLM2K8G51C19U4B).
+* A mayor cantidad de ranks en el sistema, más carga sobre el memory controller. Eso casi siempre implica necesidad de más voltaje, sobre todo VCCSA en Intel y SOC voltage en AMD.
 
-### Voltage Scaling
-* Voltage scaling simply means how the IC responds to voltage.
-* On many ICs, tCL scales with voltage, meaning giving it more voltage can allow you to drop tCL. Conversely, tRCD and/or tRP typically do not scale with voltage on many ICs, meaning no matter how much voltage you pump into it, it will not budge.  
-As far as I know, tCL, tRCD, tRP, and possibly tRFC can (or can not) see voltage scaling.
-* Similarly, if a timing scales with voltage, you can increase the voltage to run the same timing at a higher frequency.
-![CL11 Voltage Scaling](Images/cl-voltage-scaling.png)
-  * You can see that tCL scales almost linearly up to DDR4-2533 with voltage on H8C.
-  * tCL on S8B has perfect linear scaling with voltage.
-  * tCL on M8E also has perfect linear scaling with voltage.
-  * I've adapted this data into a [calculator](https://www.desmos.com/calculator/psisrpx3oh). Change the *f* and *v* sliders to the frequency and voltage you want, and it will output the frequencies and voltages achievable for a given CL (assuming that CL scales linearly up to 1.50 V). For example, DDR4-3200 CL14 at 1.35 V should do ~DDR4-3333 CL14 at 1.40 V, ~DDR4-3533 CL14 at 1.45 V, and DDR4-3733 CL14 at 1.50 V.
+### Escala de Voltaje
+* Voltage scaling básicamente significa cómo responde un IC al voltaje.  
+* En muchos ICs, **tCL escala con voltaje**, lo que significa que al darle más voltaje puedes bajar tCL. Por el contrario, **tRCD y/o tRP usualmente no escalan con voltaje** en la mayoría de ICs, es decir, no importa cuánto voltaje les metas, no se van a mover.  
+Hasta donde sé, tCL, tRCD, tRP y posiblemente tRFC pueden (o no) mostrar voltage scaling.  
+* De forma similar, si un timing escala con voltaje, puedes aumentar el voltaje para mantener el mismo timing a una frecuencia más alta.  
 
-* B-die tRFC Voltage Scaling
-![B-die tRFC Voltage Scaling](Images/b-die-trfc-voltage-scaling.png)
-  * Here you can see that tRFC scales pretty well on B-die.
+![CL11 Voltage Scaling](Images/cl-voltage-scaling.png)  
+  * Se puede ver que **tCL escala casi linealmente hasta DDR4-2533 con voltaje en H8C**.  
+  * **tCL en S8B tiene scaling lineal perfecto con voltaje.**  
+  * **tCL en M8E también escala de forma lineal perfecta.**  
+  * Adapté estos datos en una [calculadora](https://www.desmos.com/calculator/psisrpx3oh). Ajusta los sliders *f* y *v* a la frecuencia y voltaje que quieras, y te mostrará qué combinaciones de frecuencia y voltaje son alcanzables para un CL dado (asumiendo que CL escala linealmente hasta 1.50 V).  
+    - Ejemplo: DDR4-3200 CL14 a 1.35 V debería llegar a ~DDR4-3333 CL14 con 1.40 V, ~DDR4-3533 CL14 con 1.45 V, y DDR4-3733 CL14 con 1.50 V.  
 
-* Some older Micron ICs (before M8E) are known to scale negatively with voltage. That is, they become unstable at the same frequency and timings just by increasing the voltage (usually above 1.35 V).
-* Here is a table of ICs I have tested and if the timing scales with voltage:
+* **B-die tRFC Voltage Scaling**  
+![B-die tRFC Voltage Scaling](Images/b-die-trfc-voltage-scaling.png)  
+  * Aquí se puede ver que **tRFC escala bastante bien en B-die**.  
+
+* Algunos ICs Micron más antiguos (anteriores a M8E) son conocidos por **escalar de manera negativa con voltaje**. Es decir, se vuelven inestables en la misma frecuencia y timings solo por aumentar el voltaje (normalmente por encima de 1.35 V).  
+
+* Aquí una tabla de ICs probados y si el timing escala o no con voltaje:  
 
   | IC  | tCL | tRCD | tRP | tRFC |
   | :-: | :-: | :--: | :-: | :--: |
@@ -242,7 +243,9 @@ As far as I know, tCL, tRCD, tRP, and possibly tRFC can (or can not) see voltage
   | H8C, H8D | Y | N | N | Y |
   | H8A | Y | N | N | ? |
   | M8B, M8E, M16B, N8B, S4E, S8D | Y | N | N | N |
-  * The timings that don't scale with voltage usually need to be increased as you increase frequency.
+
+  * Los timings que **no escalan con voltaje** normalmente deben aumentarse a medida que subes la frecuencia.
+
   
 ### Expected Max Frequency
 * Below are the expected max frequency for some of the common ICs:
