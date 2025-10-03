@@ -479,35 +479,35 @@ Algunas terminologías:
 
 * Al empujar **FCLK** cerca de 1800 MHz, errores intermitentes de entrenamiento de RAM pueden aliviarse o eliminarse aumentando **VDDG CCD**.
 
-## Encontrar una línea base
-1. * Asegúrate de que tus módulos estén en las ranuras DIMM recomendadas (usualmente 2 y 4).
+## Encontrando una Línea Base
+1. * Asegúrate de que tus módulos estén en los slots DIMM recomendados (generalmente 2 y 4).
 
-   * Asegúrate de que el overclock de tu CPU esté desactivado al ajustar la RAM, ya que un CPU inestable puede causar errores de memoria. De igual manera, al aumentar la frecuencia con timings ajustados, tu CPU puede volverse inestable y podría ser necesario reajustarla.
+   * Asegúrate de que el overclock del CPU esté desactivado al tunear la RAM, ya que un CPU inestable puede causar errores de memoria. De igual manera, al empujar frecuencias altas con timings ajustados, tu CPU puede volverse inestable y requerir reinicio.
 
    * Asegúrate de que tu UEFI/BIOS esté actualizado.
   
-2. Desactiva el Modo DRAM PowerDown en el UEFI. Esto también elimina la necesidad de ajustar los timings relacionados, como tCKE y tXP.
+2. Desactiva el DRAM PowerDown Mode en el UEFI. Esto también elimina la necesidad de tunear timings relacionados como tCKE y tXP.
 
-3. En Intel, configura el Command Rate (CR) a 2T si aún no lo está y establece tCCDL en 8.
+3. En Intel, ajusta el Command Rate (CR) a 2T si no lo está ya y configura tCCDL a 8.
 
-   En AMD, habilita Gear Down Mode si aún no está activado.
+   En AMD, habilita Gear Down Mode si no está activado.
 
-4. En Intel, comienza con 1.2 V en VCCSA y 1.15 V en VCCIO. Para ADL, VCCIO no existe. Ten en cuenta que si tienes un Alder Lake no-K SKU, VCCSA estará bloqueado y tu potencial de overclock será limitado.
+4. En Intel, comienza con 1.2 V VCCSA y 1.15 V VCCIO. Para ADL, VCCIO no existe. Nota que si tienes un SKU no-K de Alder Lake, VCCSA estará bloqueado y tu potencial de overclock será limitado.
 
    En AMD, comienza con 1.10 V SOC, 0.95 V VDDP, 0.95 V VDDG CCD y 1.05 V VDDG IOD.
-   * Si no puedes iniciar o encuentras errores al aumentar la frecuencia o ajustar los timings, es posible que estos voltajes necesiten incrementarse. Consulta [Controlador de Memoria Integrado (IMC)](#integrated-memory-controller-imc) para voltajes máximos recomendados y más información. Ten cuidado de no incrementarlos demasiado, ya que puede ocurrir un escalado negativo. Los voltajes VCCSA/VCCIO o SOC son los que probablemente necesiten ajustarse, y pueden aumentarse en pasos de 25-50 mV.
-   * El voltaje SOC puede llamarse diferente dependiendo del fabricante.
+   * Si no puedes bootear o encuentras errores al aumentar frecuencia o ajustar timings, entonces estos voltajes pueden necesitar incrementarse. Consulta [Integrated Memory Controller (IMC)](#integrated-memory-controller-imc) para voltajes máximos recomendados y más información. Ten cuidado de no aumentarlos demasiado, ya que puede ocurrir “negative scaling”. VCCSA/VCCIO o SOC son los que probablemente necesiten aumento, en pasos de 25-50 mV.
+   * El voltaje SOC puede llamarse diferente según el fabricante.
      * Asrock: CPU VDDCR_SOC Voltage. Si no lo encuentras, puedes usar SOC Overclock VID oculto en el menú AMD CBS.
        * [Valores VID](https://www.reddit.com/r/Amd/comments/842ehb/asrock_ab350_pro4_guide_bios_overclocking_raven/).
      * Asus: VDDCR SOC.
      * Gigabyte: (Dynamic<sup>1</sup>) Vcore SOC.
-       * <sup>1</sup>Dynamic Vcore SOC se encuentra en ciertas placas Gigabyte y es un voltaje de compensación. Por lo tanto, el voltaje base puede cambiar automáticamente al aumentar la frecuencia de la DRAM. Por ejemplo, +0.100 V a DDR4-3000 podría resultar en 1.10 V real, pero +0.100 V a DDR4-3400 podría resultar en 1.20 V real.
+       * <sup>1</sup>Dynamic Vcore SOC se encuentra en ciertas motherboards Gigabyte y es un voltaje de offset. Por lo tanto, el voltaje base puede cambiar automáticamente al aumentar la frecuencia de DRAM. Por ejemplo, +0.100 V a DDR4-3000 podría resultar en 1.10 V real, pero +0.100 V a DDR4-3400 podría resultar en 1.20 V real.
      * MSI: CPU NB/SOC.
-5. Para determinar qué voltaje usar para tu IC, consulta la sección [voltaje diario máximo recomendado](#maximum-recommended-daily-voltage).
-   * "Roll over" significa que el IC se vuelve más inestable al aumentar el voltaje, a veces hasta el punto de no hacer POST.
-   * ICs conocidos por "roll over" por encima de 1.35 V incluyen, pero no se limitan a: 8 Gb Samsung C-die y Micron/SpecTek antiguos (antes de M8E).
+5. Para determinar qué voltaje usar para tu IC, consulta la [sección de voltaje diario máximo recomendado](#maximum-recommended-daily-voltage).
+   * “Roll over” significa que el IC se vuelve más inestable al aumentar el voltaje, a veces hasta no POSTear.
+   * ICs conocidos por “roll over” por encima de 1.35 V incluyen, pero no se limitan a: Samsung C-die de 8 Gb y Micron/SpecTek más antiguos (antes de M8E).
 
-6. Configura los timings primarios de forma relajada. Ver tabla a continuación.
+6. Configura timings primarios sueltos. Revisa la tabla a continuación.
 
    |Frecuencia|tCL|tRCD|tRP|tRAS|
    |---|---|---|---|---|
@@ -519,54 +519,54 @@ Algunas terminologías:
 
    Fuente: Eden de [Overclocking Discord](discord.gg/overclock)
 
-   * Algunos ICs pueden no iniciar con timings primarios muy relajados al principio. Se recomienda aflojar los timings a medida que la frecuencia aumenta siguiendo las sugerencias de la tabla.
-   * Algunas placas tienen reglas automáticas que pueden causar problemas, como tCWL = tCL - 1, lo que puede llevar a que tCWL sea un número impar. Si es así, intenta configurar tCWL un valor menor.
-     * tCWL mayor a 18 o 20 puede no funcionar, aunque no es necesario establecer valores tan altos.
-   * Ver [este post](https://redd.it/ahs5a2) para más información sobre estos timings.
+   * Algunos ICs pueden no bootear con timings primarios muy sueltos al inicio. Se recomienda aflojarlos mientras se aumenta la frecuencia según la tabla anterior.
+   * Algunas motherboards tienen reglas automáticas que pueden causar problemas, como tCWL = tCL - 1, lo que puede llevar a que tCWL sea impar. Si es así, prueba configurar tCWL un valor más bajo.
+     * tCWL mayor a 18 o 20 puede no funcionar, aunque no es necesario ponerlo tan alto.
+   * Consulta [este post](https://redd.it/ahs5a2) para más información sobre estos timings.
   
-7. Aumenta la frecuencia de la DRAM hasta que no arranque Windows. Ten en cuenta las expectativas detalladas anteriormente, incluyendo los timings para cada rango de frecuencia.
+7. Incrementa la frecuencia de DRAM hasta que Windows no bootee más. Ten en cuenta las expectativas detalladas arriba, incluyendo los timings para cada rango de frecuencia.
    * Ryzen 3000/5000:
-     * Desincronizar MCLK y FCLK puede causar una gran penalización de latencia, por lo que es mejor ajustar los timings para mantener MCLK:FCLK 1:1. Ver [AMD - AM4](#amd-imc) para más información.
-   * Si estás en Intel, una manera rápida de saber si eres inestable es revisar los RTLs y IOLs. Cada grupo de RTLs e IOLs corresponde a un canal. Dentro de cada grupo, 2 valores corresponden a cada DIMM.
+     * Desincronizar MCLK y FCLK puede generar un enorme penal de latencia, así que es mejor ajustar timings para mantener MCLK:FCLK 1:1. Revisa [AMD - AM4](#amd-imc) para más información.
+   * En Intel, una forma rápida de saber si eres inestable es examinar los RTLs e IOLs. Cada grupo de RTLs y IOLs corresponde a un canal. Dentro de cada grupo, 2 valores corresponden a cada DIMM.
 
-   RTLs y IOLs en Asrock Timing Configurator:
-
+   RTLs e IOLs en Asrock Timing Configurator:
+   
    ![](Images/intel-rtl-iol-difference-stable.png)
 
-   Como tengo mis módulos instalados en el canal A ranura 2 y canal B ranura 2, necesito mirar D1 dentro de cada grupo de RTLs y IOLs.  
+   Con mis módulos instalados en canal A slot 2 y canal B slot 2, debo revisar D1 dentro de cada grupo de RTLs e IOLs.  
    Los RTLs no deben diferir más de 2, y los IOLs no más de 1.  
-   En mi caso, RTLs son 53 y 55, exactamente 2 de diferencia, e IOLs ambos 7.
-   Nota: tener RTLs e IOLs dentro de esos rangos no garantiza estabilidad.
-   * Si estás en Ryzen 3000 o 5000, asegúrate de que la frecuencia de Infinity Fabric (FCLK) esté configurada a la mitad de tu frecuencia efectiva de DRAM. Confirma esto en ZenTimings asegurando que FCLK coincida con UCLK y MCLK.
-8. Ejecuta un test de memoria de tu elección.
-   * Windows usará ~2000 MB, así que tenlo en cuenta al ingresar la cantidad de RAM a testear si el test tiene entrada manual. Por ejemplo, tengo 16 GB de RAM y usualmente pruebo 14000 MB.
-   * Cobertura/duración mínima recomendada:
-     * **Para AMD, ejecuta Prime95 Large FFTs y OCCT VRAM con utilización máxima simultáneamente para estresar FCLK y asegurar estabilidad. Esto se hace después de cualquier cambio de frecuencia/FCLK.**
+   En mi caso, los RTLs son 53 y 55 (exactamente 2 de diferencia) y los IOLs ambos 7.
+   Nota: tener RTLs e IOLs dentro de estos rangos no garantiza estabilidad.
+   * En Ryzen 3000 o 5000, asegúrate que la frecuencia de Infinity Fabric (FCLK) esté a la mitad de tu frecuencia efectiva de DRAM. Confírmalo en ZenTimings asegurando que FCLK coincida con UCLK y MCLK.
+8. Ejecuta un tester de memoria de tu elección.
+   * Windows usará ~2000 MB, asegúrate de tenerlo en cuenta al ingresar la cantidad de RAM a testear si el test requiere input manual. Por ejemplo, tengo 16 GB de RAM y usualmente testeo 14000 MB.
+   * Cobertura/tiempo mínimo recomendado:
+     * **Para AMD, corre Prime95 Large FFTs y OCCT VRAM con uso máximo simultáneo para estresar FCLK y garantizar estabilidad. Esto debe hacerse después de cualquier cambio de frecuencia/FCLK.**
      * MemTestHelper (HCI MemTest): 20 % por hilo.
      * Karhu RAMTest: 5000 %.
-       * En la pestaña avanzada, asegúrate de que la caché de CPU esté activada. Esto acelera las pruebas ~20 %.
-       * Para cobertura de 6400 % y duración de 1 hora, la tasa de error es 99,41 % y 98,43 % respectivamente ([Fuente - FAQ](https://www.karhusoftware.com/ramtest/)).
+       * En la pestaña avanzada, asegúrate que CPU cache esté habilitada. Esto acelera el test ~20 %.
+       * Testear 6400 % de cobertura durante 1 hora tiene tasa de error de 99,41 % y 98,43 % respectivamente ([Fuente - sección FAQ](https://www.karhusoftware.com/ramtest/)).
      * TM5 anta777 Extreme: 3 ciclos.
-       * La duración varía según la densidad. Para 16 GB RAM, usualmente 1.5-2 horas. Para 32 GB, ajusta la fila 12 del config (Time (%)) a la mitad para obtener tiempo similar a 16 GB.
+       * El tiempo varía según densidad. Para 16 GB RAM, usualmente toma 1.5-2 horas. Para 32 GB RAM, puedes poner la fila 12 de la config (Time (%)) a la mitad y obtendrás un tiempo similar a 16 GB.
      * OCCT Memory: 30 minutos cada uno para SSE y AVX.
-     * **Se pueden realizar más tests como otras configuraciones TM5 para máxima cobertura de errores.**
-9. Si ocurre un crash/freezing/BSOD o error, baja la frecuencia de DRAM un nivel y prueba de nuevo.
-10. Guarda tu perfil de overclock en el UEFI.
-11. A partir de este punto, puedes: intentar una frecuencia mayor o trabajar en ajustar los timings.
-   * Ten en cuenta las expectativas anteriores. Si estás en el límite de tus ICs y/o IMC, es mejor ajustar los timings.
+     * **Puedes ejecutar más tests como otras configs de TM5 para asegurar estabilidad. Se recomienda correr varias pruebas para máxima cobertura de errores.**
+9. Si crash/freeze/BSOD o encuentras un error, baja la frecuencia de DRAM un notch y vuelve a testear.
+10. Guarda tu perfil de overclock en tu UEFI.
+11. Desde aquí puedes: intentar aumentar frecuencia o trabajar en ajustar los timings.
+   * Ten en cuenta las expectativas anteriores. Si estás al límite de tus ICs y/o IMC, es mejor afinar los timings.
    
 ## Ajustando Timings
-* Asegúrate de ejecutar un test de memoria y benchmark tras cada cambio para verificar mejoras de rendimiento.
-  * Recomiendo benchmarkear 3 a 5 veces y promediar resultados, ya que los tests de memoria pueden variar.
-  * Ancho de banda teórico máximo (MB/s) = `Transfers per clock * Actual Clock * Channel Count * Bus Width * Bit to Byte ratio`.
-       * Transfers per clock = número de transferencias de datos por ciclo completo de memoria. Ocurre dos veces por ciclo en DDR RAM, en flanco ascendente y descendente.
-       * Actual Clock = frecuencia real de la memoria en MHz.
-       * Channel Count = número de canales activos en tu CPU.
-       * Bus Width = ancho de cada canal en bits. DDR1+ = 64 bits.
-       * Bit to Byte ratio = constante 1/8 o 0.125.
- 
-    | Velocidad Efectiva de Memoria (MT/s) | Máx. Ancho de Banda Dual Channel (MB/s) |
-    | :-------------: | :------------------------: |
+* Asegúrate de correr un test de memoria y benchmark después de cada cambio para verificar que el rendimiento esté mejorando.
+  * Recomiendo correr el benchmark de 3 a 5 veces y promediar los resultados, ya que los benchmarks de memoria pueden variar ligeramente.
+  * Ancho de banda máximo teórico (MB/s) = `Transfers per clock * Clock real * Número de canales * Bus Width * Conversión bits a bytes`.
+       * Transfers per clock: número de transferencias de datos en un ciclo completo de memoria. Ocurre dos veces por ciclo en DDR, en flancos ascendente y descendente.
+       * Clock real: frecuencia real de la memoria, medida en MHz. Programas como CPU-Z muestran esta frecuencia.
+       * Número de canales: cantidad de canales activos en tu CPU.
+       * Bus Width: ancho de cada canal de memoria, en bits. Desde DDR1, esto es 64 bits.
+       * Conversión bits a bytes: constante 1/8 (0.125).
+
+    | Velocidad Efectiva (MT/s) | Máx Ancho de Banda Dual Channel (MB/s) |
+    | :-----------------: | :-------------------: |
     | 3000 | 48000 |
     | 3200 | 51200 |
     | 3400 | 54440 |
@@ -576,33 +576,35 @@ Algunas terminologías:
     | 3800 | 60800 |
     | 4000 | 64000 |
     
-    * Tu ancho de banda de lectura/escritura debería ser 90 % - 98 % del teórico máximo.
-      * En Ryzen 3000-5000 con CCD único, el ancho de banda de escritura debería ser 90 % - 98 % de la mitad del máximo teórico.  
-        Es posible alcanzar la mitad del máximo teórico de escritura. Ver [aquí](https://redd.it/cgc9bh).
-      * Porcentaje del máximo teórico es inversamente proporcional a la mayoría de los timings. Ajustar timings mejora este valor.
+    * Tu ancho de banda de lectura y escritura debería ser 90 % - 98 % del ancho de banda teórico máximo.
+      * En Ryzen 3000-5000 de CCD único, el ancho de banda de escritura debería ser 90 % - 98 % de la mitad del máximo teórico.  
+        Es posible alcanzar la mitad del ancho de banda de escritura teórico máximo. Ver [aquí](https://redd.it/cgc9bh).
+      * El porcentaje del ancho de banda máximo teórico es inversamente proporcional a la mayoría de los timings. En general, a medida que se ajustan los timings de RAM, este valor aumenta.
 
-1. Recomiendo ajustar primero algunos timings secundarios, ya que aceleran las pruebas de memoria.  
+1. Recomiendo empezar ajustando algunos de los **timings secundarios**, ya que aceleran las pruebas de memoria.  
    Mis sugerencias:
 
-   | Timing | Seguro | Ajustado | Extremo |
+   | Timing | Safe | Tight | Extreme |
    | ------ | ---- | ----- | ------- |
    | tRRDS tRRDL tFAW | 6 6 24 | 4 6 16 | 4 4 16 |
    | tWR tRTP<sup>1</sup> | 20 10 | 16 8 | 12 6 |
 
-   * En AMD, si GDM está activado, tWR y tRTP se redondean; redúcelos en 2 o mantenlos pares.  
-   * Valor mínimo donde reducir tFAW afecta rendimiento = `tRRDS * 4` o `tRRDL * 4`, el menor.
-   * No es necesario ejecutar todos los timings en un solo preset. Ej: tRRDS tRRDL tFAW en preset ajustado, tWR en extremo.
-   * En algunas placas Intel, tWR en UEFI no tiene efecto, se controla vía tWRPRE (a veces tWRPDEN). Reducir tWRPRE en 1 reduce tWR en 1, siguiendo tWR = tWRPRE - tCWL - 4.
-   * <sup>1</sup>tWR = 2*tRTP según datasheet Micron DDR4. También en JEDEC DDR4.
-   ![Relación tWR tRTP](Images/tWR-tRTP-relationship.png)  
-   Gracias a [junkmann](https://github.com/integralfx/MemTestHelper/issues/55).
-     
-2. A continuación tRFC. Por defecto, ICs 8 Gb = 350 **ns**.
-   * Nota: Reducir demasiado tRFC puede causar congelamientos/sistemas bloqueados.
-   * tRFC = ciclos que los capacitores de DRAM se "recargan" o refrescan. La pérdida de carga es proporcional a la temperatura.
-   * Para convertir a ns: `2000 * timing / ddr_freq`. Ej: tRFC 250 DDR4-3200 = `2000 * 250 / 3200 = 156.25 ns`.
-   * Para convertir de ns a UEFI: `ns * ddr_freq / 2000`. Ej: 180 ns DDR4-3600 = `180 * 3600 / 2000 = 324`.
-   * tRFC típicos (ns) según IC:
+   * En AMD, si GDM está habilitado, tWR y tRTP se redondean, baja 2 o mantenlos pares.   
+   * El valor mínimo donde bajar tFAW afectará el rendimiento es `tRRDS * 4` o `tRRDL * 4`, el que sea menor.
+   * No es necesario aplicar todos los presets a todos los timings al mismo tiempo. Por ejemplo, puedes correr tRRDS tRRDL tFAW en preset tight, pero tWR en extreme.
+   * En algunas motherboards Intel, tWR en UEFI no tiene efecto y debe controlarse con tWRPRE (a veces tWRPDEN). Reducir tWRPRE en 1 bajará tWR en 1, siguiendo tWR = tWRPRE - tCWL - 4.
+   * <sup>1</sup>tWR = 2*tRTP según datasheet DDR4 Micron y JEDEC DDR4.  
+     ![Relación tWR-tRTP](Images/tWR-tRTP-relationship.png)  
+     Gracias a [junkmann](https://github.com/integralfx/MemTestHelper/issues/55).
+
+2. Ahora tRFC. Por defecto para ICs de 8 Gb es 350 **ns**.
+   * Nota: ajustar demasiado tRFC puede causar freezes o lock-ups.
+   * tRFC es el número de ciclos que los condensadores de DRAM necesitan para “recargarse” o refrescarse. Como la pérdida de carga es proporcional a la temperatura, la RAM a mayor temperatura necesita tRFC más alto.
+   * Conversión a ns: `2000 * timing / ddr_freq`.  
+     Ejemplo: tRFC 250 a DDR4-3200 = `2000 * 250 / 3200 = 156.25 ns`.
+   * Conversión de ns a UEFI: `ns * ddr_freq / 2000`.  
+     Ejemplo: 180 ns a DDR4-3600 = `180 * 3600 / 2000 = 324`, ingresa 324 en UEFI.
+   * tRFC típico en ns según ICs:
 
      | IC | tRFC (ns) |
      | :-: | :-------: |
@@ -613,347 +615,103 @@ Algunas terminologías:
      | M8E, M16B | 280 - 310 |
      | S8C | 300 - 340 |
      
-   * Para otros ICs, recomiendo búsqueda binaria para hallar tRFC estable más bajo.
-   * [Tabla tRFC por Reous](https://www.hardwareluxx.de/community/threads/hynix-8gbit-ddr4-cjr-c-die-h5an8g8ncjr-djr-2020-update.1206340/) (parte inferior).
-3. Sugerencias para otros secundarios:
+   * Para otros ICs, recomiendo **binary search** para encontrar tRFC estable mínimo.
 
-   | Timing | Seguro | Ajustado | Extremo |
+3. Sugerencias para el resto de los secundarios:
+
+   | Timing | Safe | Tight | Extreme |
    | :----: | :--: | :---: | :-----: |
    | tWTRS tWTRL | 4 12 | 4 10 | 4 8 |
    | tCWL<sup>1</sup> | tCL | tCL - 1 | tCL - 2 |
-   
-   * AMD: si GDM activado, tCWL se redondea; redúcelo 2 o mantén par.
-   * Intel: tWTRS/L auto, controlado con tWRRD_dg/sg. Reducir tWRRD_dg 1 reduce tWTRS 1, similar con sg. Luego manualmente tWTRS/L.
-   * Cambiar tCWL afecta tWRRD_dg/sg → tWTRS/L. Reducir tCWL 1 → reducir tWRRD_dg/sg 1. También puede afectar tWR según relación anterior.
-   * <sup>1</sup>Algunas placas no manejan tCWL impar. Ej: estable a 4000 15-19-19 tCWL 14, tCWL 15 no hace POST. Otra experiencia similar en Asus. Ajusta tCWL = tCL si tCL par, o uno menor si impar.
-   * El preset extremo no es el mínimo absoluto. tRTP puede ser 5 (6 con GDM activado), tWTRS/L 1/6. Algunas placas soportan tCWL tan bajo como tCL - 6. Esto aumenta carga en controlador de memoria.
-   * AMD: tCWL puede ser tCL - 2, requiere tWRRD mayor.
-   
-4. Tertiarios:
-    * AMD: [ver post](https://redd.it/ahs5a2). Sugerencia:
-  
-       | Timing | Seguro | Ajustado | Extremo |
+
+   * En AMD, si GDM está activo, tCWL se redondea; baja 2 o mantenlo par.
+   * En Intel, tWTRS/L en auto y controlado con tWRRD_dg/sg. Ajusta manualmente al mínimo estable.
+   * Cambiar tCWL afectará tWRRD_dg/sg y por tanto tWTRS/L. Baja ambos proporcionalmente.
+   * <sup>1</sup>Algunas motherboards no soportan tCWL impar; ajustar manualmente según paridad de tCL puede resolverlo.
+   * Preset extremo no es mínimo absoluto; tRTP puede ir hasta 5 (6 con GDM on), tWTRS/L hasta 1/6. Esto aumenta carga en IMC.
+
+4. Tertiarías:
+    * AMD: [post referencial](https://redd.it/ahs5a2). Sugerencia:
+
+       | Timing | Safe | Tight | Extreme |
        | ------ | ---- | ----- | ------- |
        | tRDRDSCL tWRWRSCL | 4 4 | 3 3 | 2 2 |
      
-        * Muchos ICs tienen problemas con SCL bajos. Valores 2 muy difíciles salvo Samsung 8 Gb B-Die. Valores >5 afectan mucho el ancho de banda.
-     
-    * Intel: ajustar un grupo de terciarios a la vez. Sugerencias:
-      
-      | Timing | Seguro | Ajustado | Extremo |
+        * Valores bajos (como 2) solo estables en ICs como Samsung 8 Gb B-Die. Mezclar presets posible; tRDRDSCL suele necesitar +1 o +2 respecto a tWRWRSCL.
+
+    * Intel: ajusta un grupo a la vez.
+
+      | Timing | Safe | Tight | Extreme |
       | ------ | ---- | ----- | ------- |
       | tRDRD_sg/dg/dr/dd | 8/4/8/8 | 7/4/7/7 | 6/4/6/6 |
       | tWRWR_sg/dg/dr/dd | 8/4/8/8 | 7/4/7/7 | 6/4/6/6 |
-      * tWRRD_sg/dg ver paso 3. tWRRD_dr/dd, reducir 1 hasta inestabilidad o degradación.
-      * tRDWR_sg/dg/dr/dd, reducir 1 hasta inestabilidad o degradación. Normalmente igual, ej: 9/9/9/9.
-      * Ajustar demasiado = congelamiento.
-      * dr solo afecta dual rank, dd solo si dos DIMMs por canal. Se puede ignorar o poner 0/1.
+      * tWRRD_sg/dg: ajusta según paso 3.
+      * tWRRD_dr/dd: baja hasta inestabilidad o degradación.
+      * tRDWR_sg/dg/dr/dd: baja hasta inestabilidad o degradación; usualmente se igualan.
 
-      * Dual rank setups (ver [notas sobre ranks](#a-note-on-logical-ranks-and-density)):
-         * tRDRD_dr/dd reducir un paso a 5 para mayor lectura.
-         * tWRWR_sg 6 puede degradar escritura vs 7, aunque estable.
-    
-5. Reduce tCL 1 hasta inestabilidad.
-   * AMD: GDM activado, redondea tCL; reducir 2 o mantener par.   
- 
-6. Intel: reduce tRCD y tRP 1 hasta inestabilidad.  
+      * dr solo afecta dual rank, dd solo si 2 DIMMs/slot.
 
-   AMD: reduce tRCD 1, luego tRP 1.  
-   * Nota: puede requerirse más voltaje IMC para tRCD más ajustado.
-   
-7. Configura `tRAS = tRCD(RD) + tRTP`. Aumenta si inestable.
+      * Dual rank: tRDRD_dr/dd puede bajarse a 5 para boost de lectura, tWRWR_sg 6 puede degradar escritura pese a estabilidad.
+
+5. Baja tCL de 1 en 1 hasta inestabilidad.
+   * AMD con GDM: redondear tCL, bajar 2 o mantener par.
+
+6. Intel: baja tRCD y tRP de 1 en 1 hasta inestabilidad.  
+   AMD: baja tRCD y luego tRP de 1 en 1.
+   * Nota: puede requerirse más voltaje IMC.
+
+7. Configura `tRAS = tRCD(RD) + tRTP`. Incrementa si inestable.
    * tRAS mínimo absoluto.  
    ![tRAS](Images/tras-datasheet-diagram.png)
-   * ACT a READ = tRCD
-   * READ a PRE = tRTP
-   * tRAS = tRCD + tRTP
+     * ACT a READ = tRCD
+     * READ a PRE = tRTP
+     * tRAS = tRCD + tRTP
 
+8. Configura `tRC = tRP + tRAS`. Incrementa si inestable.
+   * Solo disponible en AMD y algunos Intel UEFI.
 
-8. Configura `tRC = tRP + tRAS`. Aumenta si inestable.
-   * tRC disponible solo en AMD y algunas UEFI Intel.
-   * Intel: tRC afectado por tRP y tRAS, incluso si oculto.
-     * (1) [tRP 19 tRAS 42](Images/tRC-tRP19-tRAS42.png) - estable
-     * (2) [tRP 19 tRAS 36](Images/tRC-tRP19-tRAS36.png) - error instantáneo
-     * (3) [tRP 25 tRAS 36](Images/tRC-tRP25-tRAS42.png) - estable hasta 500 %
-     * En (1) y (3), tRC = 61, estable; en (2), tRC = 55, RAMTest detecta error instantáneo.
-
-9. Aumenta tREFI hasta inestable. Aplicar búsqueda binaria similar a tRFC.  
+9. Incrementa tREFI hasta inestabilidad. Binary search aplicable.  
    Sugerencias:
-   | Timing | Seguro | Ajustado | Extremo |
-   | ------ | ---- | ----- | ------- |
-   | tREFI | 32768 | 40000 | Máx (65535 o 65534) |
-   * No es recomendable aumentar demasiado tREFI por cambios de temperatura ambiente.
-   * tREFI máximo puede corromper archivos; proceder con precaución.
 
-10. Finalmente, Command Rate.
+   | Timing | Safe | Tight | Extreme |
+   | ------ | ---- | ----- | ------- |
+   | tREFI | 32768 | 40000 | Max (65535 o 65534) |
+
+   * No conviene subir demasiado tREFI por cambios de temperatura ambiente.
+   * tREFI máximo puede corromper archivos; usar con cuidado.
+
+10. **Command Rate**
 
     AMD:
-    * GDM desactivado y CR 1 estable es difícil, pero vale la pena intentarlo.
-    * Si ya lo lograste, omite esta sección.
-    * CR 1 más difícil a medida que aumenta frecuencia. CR 2 puede ayudar.
-    * Gear Down Mode en AMD sobrescribe Command Rate. Desactivarlo para CR 2 puede mejorar estabilidad.
+    * Deshabilitar GDM y lograr CR 1 estable es difícil, pero vale la pena.
+    * Si GDM off y CR 1 funcionan sin cambios, salta esta sección.
+    * CR 1 se vuelve más difícil con mayor frecuencia; CR 2 puede ayudar.
+    * GDM overridea CR, por lo que deshabilitar GDM para CR 2 puede mejorar estabilidad.
     
-    1. Posible configuración: drive strengths 60-20-20-24, setup times 63-63-63.
-       * Drive strengths = ClkDrvStr, AddrCmdDrvStr, CsOdtDrvStr, CkeDrvStr.
-       * Setup times = AddrCmdSetup, CsOdtSetup, CkeSetup.
-    2. Si no hace POST, ajusta setup times hasta lograrlo (todos juntos).
-    3. Ejecuta test de memoria.
-    4. Ajusta setup times, luego drive strengths si inestable.
-    * Configuración estable GDM off CR 1:
+    1. Posibilidad: Drive strengths 60-20-20-24 y Setup times 63-63-63.
+       * Drive strengths: ClkDrvStr, AddrCmdDrvStr, CsOdtDrvStr, CkeDrvStr.
+       * Setup times: AddrCmdSetup, CsOdtSetup, CkeSetup.
+    2. Si no bootea, ajusta setup times juntos hasta lograr POST.
+    3. Corre test de memoria.
+    4. Ajusta setup times y luego drive strengths si inestable.
+    * Mis settings estables GDM off CR 1:
 
       ![](Images/gdm-off-cr-1t-stable.png)
 
-    1. Drive strength >24 Ω puede afectar estabilidad. Setup times ≠0 rara vez necesario, pero ayuda CR 1.
+    1. Drive strength > 24 Ω puede dañar estabilidad. Setup times >0 raramente necesarios, pero ayudan a CR 1.
 
     Intel:
-    * < DDR4-4400: intenta CR 1T; si no, deja CR 2T.
-    * Asus Maximus: Trace Center puede ayudar a lograr CR 1T a frecuencias altas.
+    * DDR4 <4400: intenta CR 1T, si falla, usa CR 2T.
+    * Asus Maximus: habilitar Trace Center ayuda a CR 1T a frecuencias altas.
 
-11. Intel: aumentar offsets IOL para reducir IOLs. Test de memoria tras cambio. Más info [aquí](https://hwbot.org/newsflash/3058_advanced_skylake_overclocking_tune_ddr4_memory_rtlio_on_maximus_viii_with_alexaros_guide).
-  * RTL y IOL afectan rendimiento. Reducir valores = más ancho de banda, menor latencia.
+11. Intel: aumenta offsets IOL para reducir IOLs, luego test de memoria. Más info [aquí](https://hwbot.org/newsflash/3058_advanced_skylake_overclocking_tune_ddr4_memory_rtlio_on_maximus_viii_with_alexaros_guide).
+  * RTL e IOL impactan rendimiento; bajarlos aumenta bandwidth y reduce latencia.
   
     ![](Images/rtl-iol-aida-impact.png)
 
-  * Valores bajos pueden mejorar estabilidad y reducir voltaje IMC necesario. Algunas placas entrenan automáticamente. Otras ignorarán entradas.
+  * Valores bajos pueden ayudar estabilidad y reducir voltaje IMC. Algunos boards entrenan solos; otros permiten tuning manual.
 
-12. También puedes aumentar voltaje DRAM para bajar timings más. Ten en cuenta [características de escalado de voltaje de tus ICs](#voltage-scaling) y [voltaje diario máximo recomendado](#maximum-recommended-daily-voltage).
-1. * Asegúrate de que tus módulos estén en las ranuras DIMM recomendadas (usualmente 2 y 4).
-
-   * Asegúrate de que el overclock de tu CPU esté desactivado al ajustar la RAM, ya que un CPU inestable puede causar errores de memoria. De igual manera, al aumentar la frecuencia con timings ajustados, tu CPU puede volverse inestable y podría ser necesario reajustarla.
-
-   * Asegúrate de que tu UEFI/BIOS esté actualizado.
-  
-2. Desactiva el Modo DRAM PowerDown en el UEFI. Esto también elimina la necesidad de ajustar los timings relacionados, como tCKE y tXP.
-
-3. En Intel, configura el Command Rate (CR) a 2T si aún no lo está y establece tCCDL en 8.
-
-   En AMD, habilita Gear Down Mode si aún no está activado.
-
-4. En Intel, comienza con 1.2 V en VCCSA y 1.15 V en VCCIO. Para ADL, VCCIO no existe. Ten en cuenta que si tienes un Alder Lake no-K SKU, VCCSA estará bloqueado y tu potencial de overclock será limitado.
-
-   En AMD, comienza con 1.10 V SOC, 0.95 V VDDP, 0.95 V VDDG CCD y 1.05 V VDDG IOD.
-   * Si no puedes iniciar o encuentras errores al aumentar la frecuencia o ajustar los timings, es posible que estos voltajes necesiten incrementarse. Consulta [Controlador de Memoria Integrado (IMC)](#integrated-memory-controller-imc) para voltajes máximos recomendados y más información. Ten cuidado de no incrementarlos demasiado, ya que puede ocurrir un escalado negativo. Los voltajes VCCSA/VCCIO o SOC son los que probablemente necesiten ajustarse, y pueden aumentarse en pasos de 25-50 mV.
-   * El voltaje SOC puede llamarse diferente dependiendo del fabricante.
-     * Asrock: CPU VDDCR_SOC Voltage. Si no lo encuentras, puedes usar SOC Overclock VID oculto en el menú AMD CBS.
-       * [Valores VID](https://www.reddit.com/r/Amd/comments/842ehb/asrock_ab350_pro4_guide_bios_overclocking_raven/).
-     * Asus: VDDCR SOC.
-     * Gigabyte: (Dynamic<sup>1</sup>) Vcore SOC.
-       * <sup>1</sup>Dynamic Vcore SOC se encuentra en ciertas placas Gigabyte y es un voltaje de compensación. Por lo tanto, el voltaje base puede cambiar automáticamente al aumentar la frecuencia de la DRAM. Por ejemplo, +0.100 V a DDR4-3000 podría resultar en 1.10 V real, pero +0.100 V a DDR4-3400 podría resultar en 1.20 V real.
-     * MSI: CPU NB/SOC.
-5. Para determinar qué voltaje usar para tu IC, consulta la sección [voltaje diario máximo recomendado](#maximum-recommended-daily-voltage).
-   * "Roll over" significa que el IC se vuelve más inestable al aumentar el voltaje, a veces hasta el punto de no hacer POST.
-   * ICs conocidos por "roll over" por encima de 1.35 V incluyen, pero no se limitan a: 8 Gb Samsung C-die y Micron/SpecTek antiguos (antes de M8E).
-
-6. Configura los timings primarios de forma relajada. Ver tabla a continuación.
-
-   |Frecuencia|tCL|tRCD|tRP|tRAS|
-   |---|---|---|---|---|
-   |<=3200|16|20|20|40|
-   |3201-3600|18|22|22|44|
-   |3601-4000|20|24|24|48|
-   |4001-4400|22|26|26|52|
-   |4400+|24|28|28|56|
-
-   Fuente: Eden de [Overclocking Discord](discord.gg/overclock)
-
-   * Algunos ICs pueden no iniciar con timings primarios muy relajados al principio. Se recomienda aflojar los timings a medida que la frecuencia aumenta siguiendo las sugerencias de la tabla.
-   * Algunas placas tienen reglas automáticas que pueden causar problemas, como tCWL = tCL - 1, lo que puede llevar a que tCWL sea un número impar. Si es así, intenta configurar tCWL un valor menor.
-     * tCWL mayor a 18 o 20 puede no funcionar, aunque no es necesario establecer valores tan altos.
-   * Ver [este post](https://redd.it/ahs5a2) para más información sobre estos timings.
-  
-7. Aumenta la frecuencia de la DRAM hasta que no arranque Windows. Ten en cuenta las expectativas detalladas anteriormente, incluyendo los timings para cada rango de frecuencia.
-   * Ryzen 3000/5000:
-     * Desincronizar MCLK y FCLK puede causar una gran penalización de latencia, por lo que es mejor ajustar los timings para mantener MCLK:FCLK 1:1. Ver [AMD - AM4](#amd-imc) para más información.
-   * Si estás en Intel, una manera rápida de saber si eres inestable es revisar los RTLs y IOLs. Cada grupo de RTLs e IOLs corresponde a un canal. Dentro de cada grupo, 2 valores corresponden a cada DIMM.
-
-   RTLs y IOLs en Asrock Timing Configurator:
-
-   ![](Images/intel-rtl-iol-difference-stable.png)
-
-   Como tengo mis módulos instalados en el canal A ranura 2 y canal B ranura 2, necesito mirar D1 dentro de cada grupo de RTLs y IOLs.  
-   Los RTLs no deben diferir más de 2, y los IOLs no más de 1.  
-   En mi caso, RTLs son 53 y 55, exactamente 2 de diferencia, e IOLs ambos 7.
-   Nota: tener RTLs e IOLs dentro de esos rangos no garantiza estabilidad.
-   * Si estás en Ryzen 3000 o 5000, asegúrate de que la frecuencia de Infinity Fabric (FCLK) esté configurada a la mitad de tu frecuencia efectiva de DRAM. Confirma esto en ZenTimings asegurando que FCLK coincida con UCLK y MCLK.
-8. Ejecuta un test de memoria de tu elección.
-   * Windows usará ~2000 MB, así que tenlo en cuenta al ingresar la cantidad de RAM a testear si el test tiene entrada manual. Por ejemplo, tengo 16 GB de RAM y usualmente pruebo 14000 MB.
-   * Cobertura/duración mínima recomendada:
-     * **Para AMD, ejecuta Prime95 Large FFTs y OCCT VRAM con utilización máxima simultáneamente para estresar FCLK y asegurar estabilidad. Esto se hace después de cualquier cambio de frecuencia/FCLK.**
-     * MemTestHelper (HCI MemTest): 20 % por hilo.
-     * Karhu RAMTest: 5000 %.
-       * En la pestaña avanzada, asegúrate de que la caché de CPU esté activada. Esto acelera las pruebas ~20 %.
-       * Para cobertura de 6400 % y duración de 1 hora, la tasa de error es 99,41 % y 98,43 % respectivamente ([Fuente - FAQ](https://www.karhusoftware.com/ramtest/)).
-     * TM5 anta777 Extreme: 3 ciclos.
-       * La duración varía según la densidad. Para 16 GB RAM, usualmente 1.5-2 horas. Para 32 GB, ajusta la fila 12 del config (Time (%)) a la mitad para obtener tiempo similar a 16 GB.
-     * OCCT Memory: 30 minutos cada uno para SSE y AVX.
-     * **Se pueden realizar más tests como otras configuraciones TM5 para máxima cobertura de errores.**
-9. Si ocurre un crash/freezing/BSOD o error, baja la frecuencia de DRAM un nivel y prueba de nuevo.
-10. Guarda tu perfil de overclock en el UEFI.
-11. A partir de este punto, puedes: intentar una frecuencia mayor o trabajar en ajustar los timings.
-   * Ten en cuenta las expectativas anteriores. Si estás en el límite de tus ICs y/o IMC, es mejor ajustar los timings.
-   
-## Ajustando Timings
-* Asegúrate de ejecutar un test de memoria y benchmark tras cada cambio para verificar mejoras de rendimiento.
-  * Recomiendo benchmarkear 3 a 5 veces y promediar resultados, ya que los tests de memoria pueden variar.
-  * Ancho de banda teórico máximo (MB/s) = `Transfers per clock * Actual Clock * Channel Count * Bus Width * Bit to Byte ratio`.
-       * Transfers per clock = número de transferencias de datos por ciclo completo de memoria. Ocurre dos veces por ciclo en DDR RAM, en flanco ascendente y descendente.
-       * Actual Clock = frecuencia real de la memoria en MHz.
-       * Channel Count = número de canales activos en tu CPU.
-       * Bus Width = ancho de cada canal en bits. DDR1+ = 64 bits.
-       * Bit to Byte ratio = constante 1/8 o 0.125.
- 
-    | Velocidad Efectiva de Memoria (MT/s) | Máx. Ancho de Banda Dual Channel (MB/s) |
-    | :-------------: | :------------------------: |
-    | 3000 | 48000 |
-    | 3200 | 51200 |
-    | 3400 | 54440 |
-    | 3466 | 55456 |
-    | 3600 | 57600 |
-    | 3733 | 59728 |
-    | 3800 | 60800 |
-    | 4000 | 64000 |
-    
-    * Tu ancho de banda de lectura/escritura debería ser 90 % - 98 % del teórico máximo.
-      * En Ryzen 3000-5000 con CCD único, el ancho de banda de escritura debería ser 90 % - 98 % de la mitad del máximo teórico.  
-        Es posible alcanzar la mitad del máximo teórico de escritura. Ver [aquí](https://redd.it/cgc9bh).
-      * Porcentaje del máximo teórico es inversamente proporcional a la mayoría de los timings. Ajustar timings mejora este valor.
-
-1. Recomiendo ajustar primero algunos timings secundarios, ya que aceleran las pruebas de memoria.  
-   Mis sugerencias:
-
-   | Timing | Seguro | Ajustado | Extremo |
-   | ------ | ---- | ----- | ------- |
-   | tRRDS tRRDL tFAW | 6 6 24 | 4 6 16 | 4 4 16 |
-   | tWR tRTP<sup>1</sup> | 20 10 | 16 8 | 12 6 |
-
-   * En AMD, si GDM está activado, tWR y tRTP se redondean; redúcelos en 2 o mantenlos pares.  
-   * Valor mínimo donde reducir tFAW afecta rendimiento = `tRRDS * 4` o `tRRDL * 4`, el menor.
-   * No es necesario ejecutar todos los timings en un solo preset. Ej: tRRDS tRRDL tFAW en preset ajustado, tWR en extremo.
-   * En algunas placas Intel, tWR en UEFI no tiene efecto, se controla vía tWRPRE (a veces tWRPDEN). Reducir tWRPRE en 1 reduce tWR en 1, siguiendo tWR = tWRPRE - tCWL - 4.
-   * <sup>1</sup>tWR = 2*tRTP según datasheet Micron DDR4. También en JEDEC DDR4.
-   ![Relación tWR tRTP](Images/tWR-tRTP-relationship.png)  
-   Gracias a [junkmann](https://github.com/integralfx/MemTestHelper/issues/55).
-     
-2. A continuación tRFC. Por defecto, ICs 8 Gb = 350 **ns**.
-   * Nota: Reducir demasiado tRFC puede causar congelamientos/sistemas bloqueados.
-   * tRFC = ciclos que los capacitores de DRAM se "recargan" o refrescan. La pérdida de carga es proporcional a la temperatura.
-   * Para convertir a ns: `2000 * timing / ddr_freq`. Ej: tRFC 250 DDR4-3200 = `2000 * 250 / 3200 = 156.25 ns`.
-   * Para convertir de ns a UEFI: `ns * ddr_freq / 2000`. Ej: 180 ns DDR4-3600 = `180 * 3600 / 2000 = 324`.
-   * tRFC típicos (ns) según IC:
-
-     | IC | tRFC (ns) |
-     | :-: | :-------: |
-     | S8B | 120 - 180 |
-     | N8B | 150 - 170 |
-     | H8D | 240 - 260 |
-     | H8A, H8C | 260 - 280 |
-     | M8E, M16B | 280 - 310 |
-     | S8C | 300 - 340 |
-     
-   * Para otros ICs, recomiendo búsqueda binaria para hallar tRFC estable más bajo.
-   * [Tabla tRFC por Reous](https://www.hardwareluxx.de/community/threads/hynix-8gbit-ddr4-cjr-c-die-h5an8g8ncjr-djr-2020-update.1206340/) (parte inferior).
-3. Sugerencias para otros secundarios:
-
-   | Timing | Seguro | Ajustado | Extremo |
-   | :----: | :--: | :---: | :-----: |
-   | tWTRS tWTRL | 4 12 | 4 10 | 4 8 |
-   | tCWL<sup>1</sup> | tCL | tCL - 1 | tCL - 2 |
-   
-   * AMD: si GDM activado, tCWL se redondea; redúcelo 2 o mantén par.
-   * Intel: tWTRS/L auto, controlado con tWRRD_dg/sg. Reducir tWRRD_dg 1 reduce tWTRS 1, similar con sg. Luego manualmente tWTRS/L.
-   * Cambiar tCWL afecta tWRRD_dg/sg → tWTRS/L. Reducir tCWL 1 → reducir tWRRD_dg/sg 1. También puede afectar tWR según relación anterior.
-   * <sup>1</sup>Algunas placas no manejan tCWL impar. Ej: estable a 4000 15-19-19 tCWL 14, tCWL 15 no hace POST. Otra experiencia similar en Asus. Ajusta tCWL = tCL si tCL par, o uno menor si impar.
-   * El preset extremo no es el mínimo absoluto. tRTP puede ser 5 (6 con GDM activado), tWTRS/L 1/6. Algunas placas soportan tCWL tan bajo como tCL - 6. Esto aumenta carga en controlador de memoria.
-   * AMD: tCWL puede ser tCL - 2, requiere tWRRD mayor.
-   
-4. Tertiarios:
-    * AMD: [ver post](https://redd.it/ahs5a2). Sugerencia:
-  
-       | Timing | Seguro | Ajustado | Extremo |
-       | ------ | ---- | ----- | ------- |
-       | tRDRDSCL tWRWRSCL | 4 4 | 3 3 | 2 2 |
-     
-        * Muchos ICs tienen problemas con SCL bajos. Valores 2 muy difíciles salvo Samsung 8 Gb B-Die. Valores >5 afectan mucho el ancho de banda.
-     
-    * Intel: ajustar un grupo de terciarios a la vez. Sugerencias:
-      
-      | Timing | Seguro | Ajustado | Extremo |
-      | ------ | ---- | ----- | ------- |
-      | tRDRD_sg/dg/dr/dd | 8/4/8/8 | 7/4/7/7 | 6/4/6/6 |
-      | tWRWR_sg/dg/dr/dd | 8/4/8/8 | 7/4/7/7 | 6/4/6/6 |
-      * tWRRD_sg/dg ver paso 3. tWRRD_dr/dd, reducir 1 hasta inestabilidad o degradación.
-      * tRDWR_sg/dg/dr/dd, reducir 1 hasta inestabilidad o degradación. Normalmente igual, ej: 9/9/9/9.
-      * Ajustar demasiado = congelamiento.
-      * dr solo afecta dual rank, dd solo si dos DIMMs por canal. Se puede ignorar o poner 0/1.
-
-      * Dual rank setups (ver [notas sobre ranks](#a-note-on-logical-ranks-and-density)):
-         * tRDRD_dr/dd reducir un paso a 5 para mayor lectura.
-         * tWRWR_sg 6 puede degradar escritura vs 7, aunque estable.
-    
-5. Reduce tCL 1 hasta inestabilidad.
-   * AMD: GDM activado, redondea tCL; reducir 2 o mantener par.   
- 
-6. Intel: reduce tRCD y tRP 1 hasta inestabilidad.  
-
-   AMD: reduce tRCD 1, luego tRP 1.  
-   * Nota: puede requerirse más voltaje IMC para tRCD más ajustado.
-   
-7. Configura `tRAS = tRCD(RD) + tRTP`. Aumenta si inestable.
-   * tRAS mínimo absoluto.  
-   ![tRAS](Images/tras-datasheet-diagram.png)
-   * ACT a READ = tRCD
-   * READ a PRE = tRTP
-   * tRAS = tRCD + tRTP
-
-
-8. Configura `tRC = tRP + tRAS`. Aumenta si inestable.
-   * tRC disponible solo en AMD y algunas UEFI Intel.
-   * Intel: tRC afectado por tRP y tRAS, incluso si oculto.
-     * (1) [tRP 19 tRAS 42](Images/tRC-tRP19-tRAS42.png) - estable
-     * (2) [tRP 19 tRAS 36](Images/tRC-tRP19-tRAS36.png) - error instantáneo
-     * (3) [tRP 25 tRAS 36](Images/tRC-tRP25-tRAS42.png) - estable hasta 500 %
-     * En (1) y (3), tRC = 61, estable; en (2), tRC = 55, RAMTest detecta error instantáneo.
-
-9. Aumenta tREFI hasta inestable. Aplicar búsqueda binaria similar a tRFC.  
-   Sugerencias:
-   | Timing | Seguro | Ajustado | Extremo |
-   | ------ | ---- | ----- | ------- |
-   | tREFI | 32768 | 40000 | Máx (65535 o 65534) |
-   * No es recomendable aumentar demasiado tREFI por cambios de temperatura ambiente.
-   * tREFI máximo puede corromper archivos; proceder con precaución.
-
-10. Finalmente, Command Rate.
-
-    AMD:
-    * GDM desactivado y CR 1 estable es difícil, pero vale la pena intentarlo.
-    * Si ya lo lograste, omite esta sección.
-    * CR 1 más difícil a medida que aumenta frecuencia. CR 2 puede ayudar.
-    * Gear Down Mode en AMD sobrescribe Command Rate. Desactivarlo para CR 2 puede mejorar estabilidad.
-    
-    1. Posible configuración: drive strengths 60-20-20-24, setup times 63-63-63.
-       * Drive strengths = ClkDrvStr, AddrCmdDrvStr, CsOdtDrvStr, CkeDrvStr.
-       * Setup times = AddrCmdSetup, CsOdtSetup, CkeSetup.
-    2. Si no hace POST, ajusta setup times hasta lograrlo (todos juntos).
-    3. Ejecuta test de memoria.
-    4. Ajusta setup times, luego drive strengths si inestable.
-    * Configuración estable GDM off CR 1:
-
-      ![](Images/gdm-off-cr-1t-stable.png)
-
-    1. Drive strength >24 Ω puede afectar estabilidad. Setup times ≠0 rara vez necesario, pero ayuda CR 1.
-
-    Intel:
-    * < DDR4-4400: intenta CR 1T; si no, deja CR 2T.
-    * Asus Maximus: Trace Center puede ayudar a lograr CR 1T a frecuencias altas.
-
-11. Intel: aumentar offsets IOL para reducir IOLs. Test de memoria tras cambio. Más info [aquí](https://hwbot.org/newsflash/3058_advanced_skylake_overclocking_tune_ddr4_memory_rtlio_on_maximus_viii_with_alexaros_guide).
-  * RTL y IOL afectan rendimiento. Reducir valores = más ancho de banda, menor latencia.
-  
-    ![](Images/rtl-iol-aida-impact.png)
-
-  * Valores bajos pueden mejorar estabilidad y reducir voltaje IMC necesario. Algunas placas entrenan automáticamente. Otras ignorarán entradas.
-
-12. También puedes aumentar voltaje DRAM para bajar timings más. Ten en cuenta [características de escalado de voltaje de tus ICs](#voltage-scaling) y [voltaje diario máximo recomendado](#maximum-recommended-daily-voltage).
+12. Puedes aumentar voltaje DRAM para bajar timings aún más. Ten en cuenta el [escalado de voltaje de tus ICs](#voltage-scaling) y [voltaje diario máximo recomendado](#maximum-recommended-daily-voltage).
 
 # Useful Links
 ## Benchmarks
