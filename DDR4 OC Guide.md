@@ -69,63 +69,63 @@ Usted siempre debería testear con varios test de estrés para asegurarse de que
 * [y-cruncher](http://www.numberworld.org/y-cruncher/) con [esta config](https://pastebin.com/dJQgFtDH).
   * Pegue esto en un nuevo archivo llamado `memtest.cfg` en el mismo folder que `y-cruncher.exe`.
   * Ajuste los siguientes campos si es necesario:
-    * `LogicalCores`: CPU threads, e.g. `[0 1 2 3 4 5]` on 6C**6**T or `[0 1 2 3 4 5 6 7]` on 4C**8**T
-    * `TotalMemory`: Memory (bytes) used by y-cruncher
-  * Create a shortcut to `y-cruncher.exe` and add `pause:1 config memtest.cfg` to the target field.
+    * `LogicalCores`: Hilos CPU, e.g. `[0 1 2 3 4 5]` en 6C**6**T o `[0 1 2 3 4 5 6 7]` en 4C**8**T
+    * `TotalMemory`: Memoria (bytes) usada por y-cruncher
+  * Cree un shortcut para `y-cruncher.exe` y agregue `pause:1 config memtest.cfg` al campo de destino.
     Your target field should look something like this: `"path\to\y-cruncher\y-cruncher.exe" pause:1 config memtest.cfg`
-  * Credits: [u/Nerdsinc](https://www.reddit.com/r/overclocking/comments/iyp1n7/ycruncher_is_a_really_effective_tool_for_testing/)
-* [Prime95](https://www.mersenne.org/download/) large FFTs is also decent at finding memory errors.
-  * I've been using a custom FFT range of 800K - 800K, though I think any FFT value inside the large FFTs range should work.
-    * Make sure 'Run FFTs in place' is not checked.
-    * In `prime.txt`, add `TortureAlternateInPlace=0` under `TortureWeak` to prevent P95 from testing in place. Testing in place will only use a bit of RAM, which we don't want.
-  * You can create a shortcut to `prime95.exe` and add `-t` to the 'Properties > Target' field to immediately start testing using the settings in `prime.txt`.  
-    Your target field should look like: `"path\to\prime95\prime95.exe" -t`.
-  * You can also change the working directory of Prime95's config files to have one config to stress test your CPU and another config to stress test your RAM.
-    1. In the folder with `prime95.exe`, create another folder. This example will be called 'RAM' (without the quotes).
-    2. Copy `prime.txt` and `local.txt` to the folder you just created.
-    3. Adjust the settings in `prime.txt` as required.
-    4. Create another shortcut to `prime95.exe`, and in the target field, add `-t -W<folder_name>`.  
-       Your target field should look like: `"path\to\prime95\prime95.exe" -t -WRAM`.
-    5. You can now use the shortcut to start Prime95 with the settings provided.
-* [randomx-stress](https://github.com/00-matt/randomx-stress/releases) - Can be used to test FCLK stability.
-### Comparison
-[Comparison](https://imgur.com/a/jhrFGhg) between Karhu RAMTest, TM5 with the extreme config, and GSAT.
-  * TM5 is the fastest and most stressful by quite a margin, though I have had instances where I would pass 30 mins of TM5 but fail within 10 mins of Karhu. Another user had a similar experience. YMMV.
+  * Créditos: [u/Nerdsinc](https://www.reddit.com/r/overclocking/comments/iyp1n7/ycruncher_is_a_really_effective_tool_for_testing/)
+* [Prime95](https://www.mersenne.org/download/) large FFTs también es decente en la búsqueda de errores de memoria.
+  * He estado usando un rango FFT personalizado de 800K - 800K, aunque creo que cualquier valor FFT dentro del rango large FFTs debería funcionar.
+    * Asegúrese de que 'Run FFTs in place' no está marcada.
+    * En `prime.txt`, añada `TortureAlternateInPlace=0` bajo `TortureWeak` para evitar que P95 se ponga a prueba en su lugar. La prueba en el lugar solo utilizará un poco de RAM, que no queremos.
+  * Puede crear un acceso directo a `prime95.exe` y añadir `-t` al campo 'Properties > Target' para comenzar inmediatamente las pruebas utilizando la configuración en `prime.txt`.  
+    El campo de destino debe tener un aspecto similar al siguiente: `"path\to\prime95\prime95.exe" -t`.
+  * También puede cambiar el directorio de trabajo de los archivos de configuración de Prime95 para tener una configuración para probar su CPU y otra configuración para probar su RAM.
+    1. En el folder con `prime95.exe`, cree otro folder. Este ejemplo se llamará 'RAM' (sin las comillas).
+    2. Copie `prime.txt` y `local.txt` al folder que acaba de crear.
+    3. Ajuste las configuraciones en `prime.txt` según sea necesario.
+    4. Cree otro shortcut para `prime95.exe`, y en el campo de desitno, agregue `-t -W<folder_name>`.  
+       El campo de destino debería verse así: `"path\to\prime95\prime95.exe" -t -WRAM`.
+    5. Ahora puede usar el shortcut para iniciar Prime95 con las configuraciones proporcionadas.
+* [randomx-stress](https://github.com/00-matt/randomx-stress/releases) - Puede ser usado para testear la estabilidad de FCLK.
+### Comparación
+[Comparación](https://imgur.com/a/jhrFGhg) entre Karhu RAMTest, TM5 con la configuración extrema, y GSAT.
+  * TM5 es el más rápido y más estresante por un margen considerable, aunque he tenido casos en los que pasaría 30 minutos de TM5 pero fallaría a 10 minutos de Karhu. Otro usuario tuvo una experiencia similar. YMMV.
     
-## Timings Software
-* To view timings in Windows: 
+## Software para Visualizar Timings
+* Para visualizar timings en Windows: 
   * Intel: 
     * X99: [Asrock Timing Configurator v3.0.6](https://www.asrock.com/mb/Intel/X99%20OC%20Formula3.1/#Download).
-    * Z370(?)/Z390: [Asrock Timing Configurator v4.0.4](https://www.asrock.com/MB/Intel/X299%20OC%20Formula/index.asp#Download) (don't need an Asrock motherboard).
-    * EVGA motherboards and Z170/Z270(?)/Z490: [Asrock Timing Configurator v4.0.3](https://www.asrock.com/mb/Intel/Z170%20OC%20Formula/#Download).
-    * For Rocket Lake: [ASRock Timing Configurator v4.0.10](https://web.archive.org/web/20211010085116/http://picx.xfastest.com/nickshih/asrock/AsrTCSetup(v4.0.10).rar).
-    * For Alder Lake: [ASRock Timing Configuator v4.0.14](https://picx.xfastest.com/nickshih/asrock/AsrTCSetup(v4.0.14).rar) or [MSI Dragon Ball](https://drive.google.com/file/d/1XmKv13D0MgC9fPaA91535wCe9ztoeaHV/view?usp=sharing).
+    * Z370(?)/Z390: [Asrock Timing Configurator v4.0.4](https://www.asrock.com/MB/Intel/X299%20OC%20Formula/index.asp#Download) (no es necesario tener una Motherboard AsRock).
+    * Motherboards EVGA y Z170/Z270(?)/Z490: [Asrock Timing Configurator v4.0.3](https://www.asrock.com/mb/Intel/Z170%20OC%20Formula/#Download).
+    * Para Rocket Lake: [ASRock Timing Configurator v4.0.10](https://web.archive.org/web/20211010085116/http://picx.xfastest.com/nickshih/asrock/AsrTCSetup(v4.0.10).rar).
+    * Para Alder Lake: [ASRock Timing Configuator v4.0.14](https://picx.xfastest.com/nickshih/asrock/AsrTCSetup(v4.0.14).rar) o [MSI Dragon Ball](https://drive.google.com/file/d/1XmKv13D0MgC9fPaA91535wCe9ztoeaHV/view?usp=sharing).
   * AMD: 
     * [ZenTimings](https://zentimings.protonrom.com/).
     
 ## Benchmarks
 
-* [AIDA64](https://www.aida64.com/downloads) - free 30 day trial. We'll be using the cache and memory benchmark (found under tools) to see how our memory performs. You can right-click the start benchmark button and run memory tests only to skip the cache tests.
-* [Intel Memory Latency Checker](https://software.intel.com/content/www/us/en/develop/articles/intelr-memory-latency-checker.html) - contains a lot of useful tests for measuring memory performance. More extensive data than AIDA64 and bandwidth numbers differ between the tests. Note that it must be run as an administrator to disable prefetching. On AMD systems, you may have to disable it in BIOS.
-* [Intel MLC GUI](https://github.com/FarisR99/IMLCGui) - GUI for Intel Memory Latency Checker made by Faris.
-* [xmrig](https://github.com/xmrig/xmrig) is very memory sensitive, so it's helpful to test the effects of specific timings. First, run as admin with `--bench=1M` as a command-line argument to start the benchmark. Then, use the benchmark time to compare.
-* [MaxxMEM2](https://www.softpedia.com/get/System/Benchmarks/MaxxMEM2.shtml) - free alternative to AIDA64, but bandwidth tests seem to be a lot lower, so it isn't directly comparable to AIDA64.
-* [Super Pi Mod v1.5 XS](https://www.techpowerup.com/download/super-pi/) - another memory-sensitive benchmark, but I haven't used it as much as AIDA64. 1M - 8M digits should be enough for a quick benchmark. You only need to look at the last (total) time, where lower is better.
-* [HWBOT x265 Benchmark](https://hwbot.org/benchmark/hwbot_x265_benchmark_-_1080p/) - I've heard that this benchmark is also sensitive to memory, but I haven't really tested it myself.
-* [PYPrime 2.x](https://github.com/monabuntur/PYPrime-2.x) - This benchmark is quick and scales very well with CPU core clock, cache/FCLK, memory frequency, and timings
+* [AIDA64](https://www.aida64.com/downloads) - prueba gratuita de 30 días. Vamos a utilizar el benchmark de caché y memoria de referencia (se encuentra en las herramientas) para ver cómo funciona nuestra memoria. Puede hacer clic con el botón derecho en el botón de inicio de la prueba de referencia y ejecutar pruebas de memoria solo para omitir las pruebas de caché.
+* [Intel Memory Latency Checker](https://software.intel.com/content/www/us/en/develop/articles/intelr-memory-latency-checker.html) - contiene muchas pruebas útiles para medir el rendimiento de la memoria. Datos más extensos que AIDA64 y los números de ancho de banda difieren entre las pruebas. Tenga en cuenta que debe ser ejecutado como administrador para desactivar el prefetching. En sistemas AMD, puede tener que desactivarlo en la BIOS.
+* [Intel MLC GUI](https://github.com/FarisR99/IMLCGui) - GUI para Intel Memory Latency Checker hecho por Faris.
+* [xmrig](https://github.com/xmrig/xmrig) es muy sensible a la memoria, por lo que es útil probar los efectos de tiempos específicos. Primero, ejecute como administrador con el argumento de la línea de comandos `--bench=1M` para iniciar el punto de referencia. Luego, use el tiempo del punto de referencia para comparar.
+* [MaxxMEM2](https://www.softpedia.com/get/System/Benchmarks/MaxxMEM2.shtml) - alternativa gratuita para AIDA64, pero las pruebas de ancho de banda suelen ser muy lentas, por lo que no es directamente comparable a AIDA64.
+* [Super Pi Mod v1.5 XS](https://www.techpowerup.com/download/super-pi/) - otro benchmark de memoria sensible, pero no lo he usado mucho como AIDA64. digitos entre 1M-8M deberían ser suficientes para un benchmark rápido. Solo necesitas visualizar el último tiempo (total), mientras más bajo, mejor.
+* [HWBOT x265 Benchmark](https://hwbot.org/benchmark/hwbot_x265_benchmark_-_1080p/) - He escuchado que este benchmark también es sensible a la memoria, pero no le testeado realmente por mí cuenta.
+* [PYPrime 2.x](https://github.com/monabuntur/PYPrime-2.x) - Este benchmark es rápido y escala muy bien con "CPU core clock", "caché/FCLK," frecuencia de memoria, y timings
 
-# General RAM Info
-## Frequency and Timings Relation
-* RAM frequency is measured in megahertz (MHz) or million cycles per second. Higher frequency means more cycles per second, which means better performance.
-* Esoteric note: People often refer to DDR4-3200 as being 3200 **MHz** however, in reality, the real frequency of the RAM is only 1600 MHz. As data is transferred on both the rising clock edge and falling clock edge in DDR (Double Data Rate) memory, the real frequency of the RAM is half of the number of transfers it makes per second. DDR4-3200 transfers 3200 million bits per second, and so, 3200 **MT/s** (MegaTransfers per second) is operating at a frequency of 1600 **MHz**.
-* RAM timings are measured in clock cycles or ticks. Lower timings mean fewer cycles to perform an operation, which means better performance.
-  * The exception to this is tREFI, which is the refresh interval. As its name suggests, tREFI is the time between refreshes. While the RAM is refreshing, it can't do anything, so you'd want to refresh as infrequently as possible. To do that, you'd want the time between refreshes to be as long as possible. This means you'd want tREFI as high as possible.
-* While lower timings may be better, this also depends on the RAM's frequency. For example, DDR4-3000 CL15 and DDR4-3200 CL16 have the same latency, despite DDR4-3000 running at a lower absolute CL. This is because the higher frequency offsets the increase in CL.
-* To calculate the actual time in nanoseconds (ns) of a given timing: `2000 * timing / ddr_freq`.
-  * For example, CL15 at DDR4-3000 is `2000 * 15 / 3000 = 10 ns`.
-  * Similarly, CL16 at DDR4-3200 is `2000 * 16 / 3200 = 10 ns`.
+# Información General Acerca de la RAM
+## Relación entre Frecuencia y Timings
+* La frecuencia de la memoria RAM está medida en megahertz (MHz) o millones de ciclos por segundo. Mayor frecuencia significa más ciclos por segundo, que se traduce a un mejor rendimiento.
+* Nota esotérica: La gente a menudo se refiere a DDR4-3200 como siendo 3200 **MHz** sin embargo, en realidad, la frecuencia real de la memoria RAM es solo 1600 MHz. A medida que los datos se transfieren tanto en el borde del reloj ascendente como en el borde del reloj descendente en DDR (Double Data Rate), la frecuencia real de la RAM es la mitad del número de transferencias que hace por segundo. DDR4-3200 transfiere 3200 millones de bits por segundo, y así, 3200 **MT/s** (MegaTransfers por segundo) opera a una frecuencia de 1600 **MHz***.
+* Los timings de RAM están medidos en ciclos de reloj o ticks. Menores timings significan menos ciclos para realizar una operación, lo que se traduce en mejor rendimiento.
+  * La excepción a esto es tREFI, que es el intervalo de refresco. Como su nombre lo dice, tREFI es el tiempo entre refrescos. Mientras que la RAM se refresca, no puede hacer nada, por lo que vas a querer que se refresque lo más infrecuentemente como sea posible. Para hacer eso, necesitas que el tiempo entre refrescos sea tan largo como sea posible. Esto significa que necesitas que tREFI tenga el mayor valor posible.
+* Aunque los timings más bajos pueden ser mejores, esto también depende de la frecuencia de la memoria RAM. Por ejemplo, DDR4-3000 CL15 y DDR4-3200 CL16 tienen la misma latencia, a pesar de que DDR4-3000 se ejecuta con un CL absoluto más bajo. Esto se debe a que la mayor frecuencia compensa el aumento de CL.
+* Para calcular el tiempo actual en nanosegundos (ns) acerca de un timing determinado: `2000 * timing / ddr_freq`.
+  * Por ejemplo, CL15 en DDR4-3000 es `2000 * 15 / 3000 = 10 ns`.
+  * Similarmente, CL16 en DDR4-3200 es `2000 * 16 / 3200 = 10 ns`.
 
-## Primary, Secondary and Tertiary Timings
+## Timings Primarios, Secundarios y Terciarios
 * Intel
 
   ![](Images/intel-primary-secondary-tertiary.png)
@@ -134,79 +134,79 @@ Usted siempre debería testear con varios test de estrés para asegurarse de que
 
   ![](Images/amd-primary-secondary-tertiary.png)
 
-* RAM timings are split into 3 categories: primary, secondary, and tertiary. These are indicated by 'P', 'S', and 'T', respectively.
-  * Primary and secondary timings affect latency and bandwidth.
-  * Tertiary timings affect bandwidth.
-    * The exception is tREFI/tREF, which affects latency and bandwidth, though it isn't modifiable on AMD.
+* Los timings de la memoria RAM están divididos en 3 categorias: primarios, secundarios, y terciarios. Estos están indicados por 'P', 'S', and 'T', respectivamente.
+  * Los timings primarios y secundarios afectan la latencia y el ancho de banda.
+  * Los timings terciarios afectan el ancho de banda.
+    * La excepción a esto es tREFI/tREF, quienes affectan latencia y ancho de banda, aunque no es modificable en AMD (es modificable hasta AMD 7000).
 
-# Expectations/Limitations
-* This section goes through 3 components that may influence your overclocking experience: ICs, motherboard, and IMC.
+# Expectativas/Limitaciones
+* Esta sección abarca sobre 3 componentes que pueden influir en tu experiencia de overclocking: ICs, motherboard, e IMC.
 
-## Motherboard
-* Motherboards with 2 DIMM slots will be able to achieve the highest frequencies.
-* For motherboards with 4 DIMM slots, the number of sticks installed will affect your maximum memory frequency. 
-  * On motherboards that use a daisy chain [memory trace layout](https://www.youtube.com/watch?v=3vQwGGbW1AE), 2 sticks are preferred. Using 4 sticks may significantly impact your maximum memory frequency.
-  * On the other hand, motherboards that use T-topology will overclock the best with 4 sticks. Using 2 sticks won't impact your maximum memory frequency as much as using 4 sticks on a daisy chain motherboard (?).
-  * There are some T-topology motherboards that overclock as well or better with just one DIMM per channel.
-  * Most vendors don't advertise their memory trace layout, but you can make an educated guess based on the QVL. For example, the Z390 Aorus Master uses a T-Topology layout as its highest validated frequency is with 4 DIMMs. However, if the highest validated frequency were done with 2 DIMMs, it *probably* uses a daisy chain layout.
-  * According to Buildzoid, Daisy Chain vs. T-Topology only matters above DDR4-4000. Following Buildzoid's logic, if you're on Ryzen 3000 or 5000, this doesn't matter as DDR4-3800 is the typical max memory frequency when running MCLK:FCLK 1:1.
-* Lower end motherboards may not overclock as well, possibly due to the lower PCB quality and the number of layers (?).
+## Placa Madre/Motherboard
+* Motherboards con 2 módulos DIMM podrán alcanzar las frecuencias más altas.
+* Para las motherboards con 4 módulos DIMM, el número de RAMs instaladas afectará tu frecuencia máxima de memoria.
+  * En las motherboards que usan daisy chain [memory trace layout](https://www.youtube.com/watch?v=3vQwGGbW1AE), es preferible usar 2 sticks. Usar 4 sticks puede impactar de manera significativa su frecuencia máxima de memoria.
+  * Por otra mano, las motherboards que usan T-topology se podrán overclockear mejor con 4 sticks. Usar 2 sticks no afectará su máxima frecuencia de memoria tanto como el uso de 4 palos en una placa madre daisy chain (?).
+  * Existen algunas motherboards con T-Topology que se overclockean igual o mejor con solo un DIMM por canal.
+  * La mayoría de los proveedores no anuncian su diseño de traza de memoria, pero usted puede hacer una suposición basada en el QVL. Por ejemplo, el Z390 Aorus Master utiliza T-Topology ya que su frecuencia validada más alta es con 4 DIMMs. Sin embargo, si la frecuencia validada más alta se hizo con 2 DIMMs, **probablemente** utiliza daisy chain.
+  * Según Buildzoid, Daisy Chain vs. T-Topology solo importa por encima de DDR4-4000. Siguiendo la lógica de Buildzoid, si estás en Ryzen 3000 o 5000, esto no importa ya que DDR4-3800 es la frecuencia máxima típica de memoria cuando se ejecuta MCLK: FCLK 1:1.
+* Las motherboards de gama baja podrían no overclockearse tan bien, posiblemente debido a la baja calidad del PCB y al número de capas (?).
   
-## Integrated Circuits (ICs)
-* Knowing what ICs (sometimes referred to as "dies") are in your RAM will give you an idea of what to expect. Even if you don't know them, you can still overclock your RAM.
+## Circuitos Integrados (ICs)
+* Saber qué ICs (a veces llamados "dies") están en su RAM le dará una idea de lo que puede esperar. Incluso si no los conoces, todavía puedes hacer overclock a tu RAM.
 
-### Shorthand Notation
+### Anotación Simple
 
-To make it easier to type ICs quickly, a shorthand notation will be used.
+Para facilitar la lectura rápida de los ICs, se utilizará una notación abreviada.
 
-XYZ where:
-* X is the first letter of the manufacturer (S for Samsung, H for Hynix, M for Micron, N for Nanya, etc.).
-* Y is the density (8 for 8 Gb, 16 for 16 Gb).
-* Z is the die revision.
+XYZ donde:
+* X es la primera letra de la manofactura (S para Samsung, H para Hynix, M para Micron, N para Nanya, etc.).
+* Y es la densidad (8 para 8 Gb, 16 para 16 Gb).
+* Z es la revisión del die (C Die, B Die, E Die, etc.).
 
-For example, the shorthand for Samsung 8 Gb B-die is S8B.
+Por ejemplo, la lectura rápida para Samsung 8 Gb B-die es S8B.
 
-### Label on Sticks
+### Etiqueta en las RAMs
 
-Using the label on the sticks is the most accurate way to identify the IC. However, currently only Corsair, G.Skill, and Kingston labels have been decoded.
+Usar la etiqueta en los sticks es la manera más adecuada para identificar el IC. Sin embargo, actualmente solo las etiquetas de Corsair, G.Skill, y Kingston han sido decodeadas.
 
-See [HardwareLuxx](https://www.hardwareluxx.de/community/threads/ryzen-ram-oc-m%C3%B6gliche-limitierungen.1216557/) for a neat infographic that summarises the following information.
+Vea [HardwareLuxx](https://www.hardwareluxx.de/community/threads/ryzen-ram-oc-m%C3%B6gliche-limitierungen.1216557/) para una infografía que resume la siguiente información.
 
-* [SpecTek](https://www.micron.com/support/spectek-support) ICs are lower binned Micron ICs.
-* Esoteric note: Many people have started calling this Micron E-die or E-die. The former is fine, but the latter can cause confusion as letter-die is typically used for Samsung ICs, i.e., Samsung 4 Gb E-die. Samsung is implied when you say E-die, but as people are calling Micron Rev. E E-die, it'd probably be a good idea to prefix the manufacturer.
+* [SpecTek](https://www.micron.com/support/spectek-support) Circuitos integrados Micron de menor categoria.
+* Nota esotérica: Muchas personas han comenzado a llamar a este Micron E-die o E-die. El primero está bien, pero el último puede causar confusión como letra-die se utiliza típicamente para ICs de Samsung, es decir, Samsung 4 Gb E-die. Samsung está implícito cuando dices E-die, pero como la gente está llamando a Micron Rev. E E-die, probablemente sería una buena idea prefijar el fabricante.
 
 #### Corsair Version Number
-* Corsair has a 3 digit version number on the sticks' label, indicating what ICs are on the stick.
-* The first digit is the manufacturer.
+* Corsair tiene un número de versión de 3 dígitos en la etiqueta de los sticks, indicando que IC se encuentra en el stick.
+* El primer dígito es la manofactura.
   * 3 = Micron
   * 4 = Samsung
   * 5 = Hynix
   * 8 = Nanya
-* The second digit is the density.
+* El segundo dígito es la densidad.
   * 1 = 2 Gb
   * 2 = 4 Gb
   * 3 = 8 Gb
   * 4 = 16 Gb
-* The last digit is the revision.
-* See the [r/overclocking wiki](https://www.reddit.com/r/overclocking/wiki/ram/ddr4#wiki_corsair) for a full list.
+* El último dígito es la revisión.
+* Lea [r/overclocking wiki](https://www.reddit.com/r/overclocking/wiki/ram/ddr4#wiki_corsair) para una lista completa.
 #### G.Skill 042 Code
-* Similar to Corsair, G.Skill uses a 042 code to indicate the ICs.
-* Example: 04213X**8**8**1**0B
-  * The first bolded character is the density. 4 for 4 Gb, 8 for 8 Gb, and S for 16 Gb.
-  * The second bolded number is the manufacturer. 1 for Samsung, 2 for Hynix, 3 for Micron, 4 for PSC (powerchip), 5 for Nanya, and 9 for JHICC.
-  * The last character is the revision.
-  * This is the code for Samsung 8 Gb B-die.
-* See the [r/overclocking wiki](https://www.reddit.com/r/overclocking/wiki/ram/ddr4#wiki_g.skill_sn_table) for a full list.
+* Similar a Corsair, G.Skill usa un 042 code para indicar el IC.
+* Ejemplo: 04213X**8**8**1**0B
+  * El primer carácter en negrita es la densidad. 4 para 4 Gb, 8 para 8 Gb y S para 16 Gb.
+  * El segundo número en negrita es el fabricante. 1 para Samsung, 2 para Hynix, 3 para Micron, 4 para PSC (powerchip), 5 para Nanya y 9 para JHICC.
+  * El último caracter es la revisión.
+  * Este es el código para Samsung 8 Gb B-die.
+* Lea [r/overclocking wiki](https://www.reddit.com/r/overclocking/wiki/ram/ddr4#wiki_g.skill_sn_table) para una lista completa.
 #### Kingston Code
-* Example: DPM**M**16A1823
-  * The bolded letter indicates the manufacturer. H for Hynix, M for Micron, and S for Samsung.
-  * The next 2 digits indicate ranks. 08 = single rank and 16 = dual rank.
-  * The following letter indicates the production month. 1-9, A, B, C.
-  * The next 2 digits indicate the production year.
-  * This is the code for dual-rank Micron produced in October 2018.
-* [Source](http://www.xtremesystems.org/forums/showthread.php?285750-Interesting-memory-deals-thread&p=5230258&viewfull=1#post5230258)
+* Ejemplo: DPM**M**16A1823
+  * La letra en negritas indica el fabricante. H para Hynix, M para Micron, y S para Samsung.
+  * Los siguientes 2 dígitos indican ranks. 08 = single rank y 16 = dual rank.
+  * La siguiente letra indica el mes de producción. 1-9, A, B, C.
+  * Los siguientes 2 dígitos indican el año de producción.
+  * Este es el código para dual-rank Micron producido en Octubre de 2018.
+* [Fuente](http://www.xtremesystems.org/forums/showthread.php?285750-Interesting-memory-deals-thread&p=5230258&viewfull=1#post5230258)
 
-### A Note on Logical Ranks and Density
+### Nota en los Rangos Lógicos y la Densidad
 * Single rank sticks usually clock higher than dual-rank sticks, but depending on the benchmark, the performance gain from rank interleaving<sup>1</sup> can be significant enough to outperform faster single-rank sticks. [This can be observed in synthetics and games](https://kingfaris.co.uk/ram).
    * On recent platforms (Comet Lake and Zen3), BIOS and memory controller support for dual-rank has significantly improved. On many Z490 boards, dual rank Samsung 8 Gb B-die (2x16 GB) will clock just as high as single-rank B-die, meaning you have all the performance gains of rank interleaving with little to no downsides.
    * <sup>1</sup>Rank interleaving allows the memory controller to parallelize memory requests, for example writing on one rank while the other is refreshing. The impact of this is easily observed in AIDA64 copy bandwidth. From the eyes of the memory controller, it doesn't matter whether the second rank is on the same DIMM (two ranks on one DIMM) or a different DIMM (two DIMM in one channel). It does, however, matter from an overclocking perspective when you consider memory trace layouts and BIOS support.
